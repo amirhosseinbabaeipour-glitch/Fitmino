@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>فیت‌مینو | داشبورد هوشمند سلامتی و مربی هوش مصنوعی</title>
+
+  <!-- Google Fonts: Vazirmatn -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            obsidian: {
+              950: '#050811',
+              900: '#0A0F1E',
+              800: '#10182B',
+              700: '#17223B',
+            },
+            neon: {
+              emerald: '#10B981',
+              mint: '#00F5A0',
+              cyan: '#06B6D4',
+              violet: '#8B5CF6',
+              amber: '#F59E0B',
+              coral: '#F43F5E',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Chart.js & Lucide Icons CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ============================================================
+       Fitmino Pro — Sehmino-Inspired Dark Neon Glass Theme
+       ============================================================ */
+    :root {
+      color-scheme: dark;
+    }
+
+    html, body {
+      font-family: 'Vazirmatn', system-ui, sans-serif;
+      background-color: #050811;
+      color: #F1F5F9;
+      overflow-x: hidden;
+      max-width: 100vw;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Ambient Mesh Glow + Subtle Tech Grid */
+    .ambient-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(640px circle at 88% 6%, rgba(16, 185, 129, 0.13), transparent 55%),
+        radial-gradient(560px circle at 10% 18%, rgba(6, 182, 212, 0.11), transparent 55%),
+        radial-gradient(620px circle at 50% 95%, rgba(139, 92, 246, 0.11), transparent 60%),
+        linear-gradient(180deg, #050811 0%, #080E1D 52%, #050811 100%);
+    }
+
+    .ambient-grid {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: radial-gradient(ellipse 85% 65% at 50% 18%, #000 18%, transparent 100%);
+    }
+
+    /* High-Craft Glass Card with Top Edge Reflection */
+    .glass-card {
+      position: relative;
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.048) 0%, rgba(255, 255, 255, 0.018) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 18px 42px -18px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.09);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .glass-hover:hover {
+      border-color: rgba(16, 185, 129, 0.34);
+      box-shadow:
+        0 20px 46px -16px rgba(0, 0, 0, 0.85),
+        0 0 28px -10px rgba(16, 185, 129, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    }
+
+    /* Floating Segmented Top Tab Shell */
+    .tab-shell {
+      background: rgba(10, 15, 30, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.65), 0 8px 26px -12px rgba(0, 0, 0, 0.75);
+    }
+
+    .top-tab-active {
+      background: linear-gradient(135deg, #00F5A0 0%, #06B6D4 100%);
+      color: #041219 !important;
+      font-weight: 800;
+      box-shadow: 0 0 22px -4px rgba(0, 245, 160, 0.6);
+    }
+
+    /* Primary Neon & AI Buttons */
+    .btn-neon {
+      background: linear-gradient(135deg, #00F5A0 0%, #06B6D4 100%);
+      color: #041219;
+      font-weight: 800;
+      box-shadow: 0 10px 26px -8px rgba(0, 245, 160, 0.55);
+      transition: all 0.2s ease;
+    }
+
+    .btn-neon:hover:not(:disabled) {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px -6px rgba(0, 245, 160, 0.7);
+    }
+
+    .btn-neon:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-ai {
+      background: linear-gradient(135deg, #8B5CF6 0%, #06B6D4 100%);
+      color: #FFFFFF;
+      font-weight: 800;
+      box-shadow: 0 10px 28px -8px rgba(139, 92, 246, 0.6);
+      transition: all 0.2s ease;
+    }
+
+    .btn-ai:hover:not(:disabled) {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 34px -6px rgba(139, 92, 246, 0.75);
+    }
+
+    .btn-ai:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Inputs (16px base to prevent mobile iOS auto-zoom) */
+    .neon-input {
+      background: rgba(5, 8, 17, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #F8FAFC;
+      font-size: 16px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .neon-input:focus {
+      outline: none;
+      border-color: #00F5A0;
+      box-shadow: 0 0 0 3px rgba(0, 245, 160, 0.16);
+    }
+
+    .neon-input::placeholder {
+      color: #64748B;
+      font-size: 14px;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.86) sepia(0.25) saturate(2) hue-rotate(120deg);
+      cursor: pointer;
+    }
+
+    /* Glowing Range Slider */
+    input[type="range"].neon-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #F43F5E 0%, #F59E0B 48%, #00F5A0 100%);
+      outline: none;
+    }
+
+    input[type="range"].neon-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3px solid #00F5A0;
+      box-shadow: 0 0 16px rgba(0, 245, 160, 0.85);
+      cursor: pointer;
+    }
+
+    input[type="range"].neon-slider::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3px solid #00F5A0;
+      box-shadow: 0 0 16px rgba(0, 245, 160, 0.85);
+      cursor: pointer;
+    }
+
+    /* Smooth Entrance & Skeleton Shimmer */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .view-enter {
+      animation: fadeUp 0.26s ease-out forwards;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.9; }
+    }
+
+    .skeleton-neon {
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 20%, rgba(16,185,129,0.12) 50%, rgba(255,255,255,0.04) 80%);
+      animation: shimmer 1.4s ease-in-out infinite;
+    }
+
+    /* Clean Dark Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.22); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 245, 160, 0.45); }
+
+    /* Hide scrollbar on horizontal quick chips */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="min-h-screen bg-obsidian-950 text-slate-100 antialiased selection:bg-emerald-400/25 selection:text-emerald-300">
+
+  <!-- Ambient Neon Layers -->
+  <div class="ambient-mesh"></div>
+  <div class="ambient-grid"></div>
+
+  <!-- Toast Stack (Replaces alert) -->
+  <div id="toast-container" class="fixed top-4 left-3 right-3 sm:left-6 sm:right-auto sm:w-96 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Custom Confirm Modal (Replaces confirm) -->
+  <div id="confirm-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+    <div class="glass-card rounded-3xl w-full max-w-sm p-6 border border-white/15 view-enter">
+      <div class="flex items-start gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-rose-500/15 border border-rose-500/35 text-rose-400 flex items-center justify-center shrink-0">
+          <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+        </div>
+        <div class="min-w-0">
+          <h3 id="confirm-title" class="text-base font-extrabold text-white">تأیید حذف</h3>
+          <p id="confirm-message" class="text-xs text-slate-400 mt-1 leading-relaxed">آیا از انجام این عملیات اطمینان دارید؟</p>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2.5 mt-6">
+        <button id="confirm-cancel-btn" type="button" class="px-4 py-2.5 rounded-2xl text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 transition">انصراف</button>
+        <button id="confirm-ok-btn" type="button" class="px-5 py-2.5 rounded-2xl text-xs font-extrabold bg-rose-500 hover:bg-rose-400 text-white shadow-lg shadow-rose-500/30 transition">تأیید و حذف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Built-In Circular SVG Neon Rest Timer Modal -->
+  <div id="timer-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="glass-card rounded-3xl w-full max-w-sm p-6 border border-cyan-400/30 view-enter relative">
+      <button id="close-timer-btn" type="button" aria-label="بستن" class="absolute top-4 left-4 w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white flex items-center justify-center transition">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+
+      <div class="text-center">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-400/30">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          تایمر استراحت بین ست‌ها
+        </span>
+        <p id="timer-exercise-label" class="text-xs text-slate-400 mt-2 truncate px-4">استراحت هوشمند تمرینی</p>
+
+        <!-- Circular SVG Progress Ring -->
+        <div class="relative w-48 h-48 mx-auto my-5 flex items-center justify-center">
+          <svg class="w-full h-full -rotate-90" viewBox="0 0 180 180">
+            <defs>
+              <linearGradient id="neonRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00F5A0" />
+                <stop offset="100%" stop-color="#06B6D4" />
+              </linearGradient>
+            </defs>
+            <circle cx="90" cy="90" r="76" stroke="rgba(255,255,255,0.08)" stroke-width="10" fill="none" />
+            <circle id="timer-ring" cx="90" cy="90" r="76" stroke="url(#neonRingGrad)" stroke-width="10" fill="none"
+                    stroke-linecap="round" stroke-dasharray="477.52" stroke-dashoffset="0"
+                    style="transition: stroke-dashoffset 0.35s linear; filter: drop-shadow(0 0 10px rgba(0,245,160,0.65));" />
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span id="timer-display" class="text-4xl font-black text-white tabular-nums tracking-tight">01:30</span>
+            <span id="timer-status" class="text-xs font-semibold text-emerald-400 mt-1">آماده</span>
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div class="grid grid-cols-4 gap-2 mb-5">
+          <button type="button" data-preset="30" class="timer-preset-btn min-h-[40px] rounded-xl text-xs font-bold bg-white/5 hover:bg-emerald-500/15 text-slate-300 border border-white/10 transition tabular-nums">۳۰ث</button>
+          <button type="button" data-preset="60" class="timer-preset-btn min-h-[40px] rounded-xl text-xs font-bold bg-white/5 hover:bg-emerald-500/15 text-slate-300 border border-white/10 transition tabular-nums">۶۰ث</button>
+          <button type="button" data-preset="90" class="timer-preset-btn min-h-[40px] rounded-xl text-xs font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-400/40 transition tabular-nums">۹۰ث</button>
+          <button type="button" data-preset="120" class="timer-preset-btn min-h-[40px] rounded-xl text-xs font-bold bg-white/5 hover:bg-emerald-500/15 text-slate-300 border border-white/10 transition tabular-nums">۱۲۰ث</button>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <button id="timer-toggle-btn" type="button" class="flex-1 btn-neon min-h-[46px] rounded-2xl text-sm">شروع تایمر</button>
+          <button id="timer-reset-btn" type="button" class="px-4 min-h-[46px] rounded-2xl text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 transition">ریست</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       STICKY FROSTED TOP HEADER + ULTRA-SLEEK FLOATING TOP TABS
+       ============================================================ -->
+  <header class="sticky top-0 z-40 bg-obsidian-950/80 backdrop-blur-2xl border-b border-white/[0.08]">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+
+      <!-- Top Row: Brand | Desktop Floating Tabs | Quick Actions -->
+      <div class="h-14 sm:h-16 flex items-center justify-between gap-2">
+        <!-- Brand Mark -->
+        <div class="flex items-center gap-2.5 shrink-0">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-emerald-400 via-cyan-400 to-violet-500 p-[1.5px] shadow-[0_0_20px_-4px_rgba(0,245,160,0.65)]">
+            <div class="w-full h-full rounded-[14px] bg-obsidian-950 flex items-center justify-center">
+              <i data-lucide="zap" class="w-5 h-5 text-emerald-400"></i>
+            </div>
+          </div>
+          <div class="leading-tight">
+            <div class="flex items-center gap-1.5">
+              <span class="text-base sm:text-lg font-black tracking-tight text-white">فیت‌مینو</span>
+              <span class="px-1.5 py-0.5 rounded-md text-[9px] font-extrabold bg-violet-500/20 text-violet-300 border border-violet-400/35">AI</span>
+            </div>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="sync-label" class="text-[10px] text-slate-400">همگام ابری</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Centered Segmented Glassmorphic Pill Tabs (md+) -->
+        <nav aria-label="ناوبری اصلی" class="hidden md:flex items-center p-1.5 rounded-2xl tab-shell gap-1">
+          <button type="button" data-nav="dashboard" class="top-nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-xs lg:text-sm font-bold text-slate-300 hover:text-white transition">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>داشبورد</span>
+          </button>
+          <button type="button" data-nav="logs" class="top-nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-xs lg:text-sm font-bold text-slate-300 hover:text-white transition">
+            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+            <span>ثبت روزانه</span>
+          </button>
+          <button type="button" data-nav="coach" class="top-nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-xs lg:text-sm font-bold text-slate-300 hover:text-white transition">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>مربی هوشمند</span>
+          </button>
+          <button type="button" data-nav="profile" class="top-nav-btn flex items-center gap-2 px-4 py-2 rounded-xl text-xs lg:text-sm font-bold text-slate-300 hover:text-white transition">
+            <i data-lucide="user-cog" class="w-4 h-4"></i>
+            <span>پروفایل</span>
+          </button>
+        </nav>
+
+        <!-- Right Quick Actions (Timer + Demo Data) -->
+        <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          <button type="button" id="header-timer-btn" class="min-h-[38px] px-2.5 sm:px-3.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-400/30 text-cyan-300 text-xs font-bold flex items-center gap-1.5 transition tabular-nums">
+            <i data-lucide="timer" class="w-4 h-4"></i>
+            <span id="header-timer-badge" class="hidden sm:inline">تایمر</span>
+          </button>
+          <button type="button" id="header-demo-btn" class="min-h-[38px] px-2.5 sm:px-3.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/35 text-emerald-300 text-xs font-extrabold flex items-center gap-1.5 transition">
+            <i data-lucide="database" class="w-3.5 h-3.5"></i>
+            <span>داده نمونه</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Sleek Full-Width 4-Item Segmented Neon Pill Tab Bar (< 768px) -->
+      <div class="md:hidden pb-2.5 pt-0.5">
+        <nav aria-label="تب‌های موبایل" class="grid grid-cols-4 gap-1 p-1 rounded-2xl tab-shell w-full">
+          <button type="button" data-nav="dashboard" class="top-nav-btn min-h-[46px] flex flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[11px] font-bold text-slate-400 transition">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span class="truncate max-w-full">داشبورد</span>
+          </button>
+          <button type="button" data-nav="logs" class="top-nav-btn min-h-[46px] flex flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[11px] font-bold text-slate-400 transition">
+            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+            <span class="truncate max-w-full">ثبت روزانه</span>
+          </button>
+          <button type="button" data-nav="coach" class="top-nav-btn min-h-[46px] flex flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[11px] font-bold text-slate-400 transition">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span class="truncate max-w-full">مربی هوشمند</span>
+          </button>
+          <button type="button" data-nav="profile" class="top-nav-btn min-h-[46px] flex flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-[11px] font-bold text-slate-400 transition">
+            <i data-lucide="user-cog" class="w-4 h-4"></i>
+            <span class="truncate max-w-full">پروفایل</span>
+          </button>
+        </nav>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN CONTENT CONTAINER
+       ============================================================ -->
+  <main class="relative z-10 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-7 pb-12">
+
+    <!-- ==========================================================
+         TAB 1: DASHBOARD (داشبورد)
+         ========================================================== -->
+    <section id="view-dashboard" class="space-y-5 view-enter">
+      <!-- Greeting & Quick Log Row -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 text-[11px] text-slate-400 mb-1">
+            <span id="dash-date-pill" class="px-2.5 py-0.5 rounded-full bg-white/[0.05] border border-white/10">امروز</span>
+            <span id="dash-count-pill" class="text-emerald-400 font-bold tabular-nums">۰ ثبت</span>
+          </div>
+          <h1 class="text-xl sm:text-3xl font-black text-white tracking-tight">
+            سلام، <span id="dash-name" class="text-transparent bg-clip-text bg-gradient-to-l from-emerald-300 via-cyan-300 to-violet-300">آرش</span>
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">نمای زنده وضعیت بدن، روند وزن و تحلیل مربی هوش مصنوعی</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button type="button" id="dash-add-log-btn" class="btn-neon min-h-[44px] px-4 sm:px-5 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-1.5 flex-1 sm:flex-initial">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>ثبت وضعیت امروز</span>
+          </button>
+          <button type="button" id="dash-open-coach-btn" class="btn-ai min-h-[44px] px-4 sm:px-5 rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-1.5 flex-1 sm:flex-initial">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>برنامه امروز</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Neon KPI Cards (2x2 on mobile, 4 cols on lg) -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <!-- KPI 1: Current Weight -->
+        <div class="glass-card glass-hover rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 overflow-hidden">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="text-[11px] sm:text-xs font-semibold text-slate-400">وزن فعلی</span>
+            <div class="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-400/30 text-emerald-400 flex items-center justify-center shrink-0">
+              <i data-lucide="scale" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span id="kpi-weight" class="text-2xl sm:text-3xl font-black text-white tabular-nums">--</span>
+            <span class="text-[11px] text-slate-400">کیلو</span>
+          </div>
+          <div class="mt-2.5 flex flex-wrap items-center justify-between gap-1">
+            <span id="kpi-delta" class="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg bg-white/5 text-slate-400 tabular-nums">بدون سابقه</span>
+            <span id="kpi-fat-mini" class="text-[10px] text-slate-500 tabular-nums hidden sm:inline">چربی: --٪</span>
+          </div>
+        </div>
+
+        <!-- KPI 2: Goal Progress -->
+        <div class="glass-card glass-hover rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 overflow-hidden">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="text-[11px] sm:text-xs font-semibold text-slate-400">مسیر هدف</span>
+            <div class="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-400/30 text-cyan-400 flex items-center justify-center shrink-0">
+              <i data-lucide="target" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between gap-1">
+            <div class="flex items-baseline gap-1">
+              <span id="kpi-goal-rem" class="text-2xl sm:text-3xl font-black text-white tabular-nums">--</span>
+              <span class="text-[11px] text-slate-400">مانده</span>
+            </div>
+            <span id="kpi-goal-val" class="text-[10px] sm:text-xs font-bold text-cyan-300 tabular-nums">هدف ۸۲</span>
+          </div>
+          <div class="mt-2.5">
+            <div class="flex justify-between text-[10px] mb-1">
+              <span class="text-slate-400">پیشرفت</span>
+              <span id="kpi-goal-pct" class="font-extrabold text-emerald-400 tabular-nums">۰٪</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+              <div id="kpi-goal-bar" class="h-full rounded-full bg-gradient-to-l from-emerald-400 to-cyan-400 shadow-[0_0_12px_rgba(0,245,160,0.85)] transition-all duration-700" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI 3: Automatic BMI -->
+        <div class="glass-card glass-hover rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 overflow-hidden">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="text-[11px] sm:text-xs font-semibold text-slate-400">شاخص BMI</span>
+            <div class="w-8 h-8 rounded-xl bg-violet-500/15 border border-violet-400/30 text-violet-400 flex items-center justify-center shrink-0">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span id="kpi-bmi" class="text-2xl sm:text-3xl font-black text-white tabular-nums">--</span>
+            <span id="kpi-bmi-status" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-white/5 text-slate-400">نامشخص</span>
+          </div>
+          <p class="mt-2.5 text-[10px] sm:text-[11px] text-slate-400 truncate tabular-nums" id="kpi-bmi-sub">نرمال: ۱۸.۵ تا ۲۴.۹</p>
+        </div>
+
+        <!-- KPI 4: Recovery Score -->
+        <div class="glass-card glass-hover rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 overflow-hidden">
+          <div class="flex items-center justify-between gap-2 mb-2.5">
+            <span class="text-[11px] sm:text-xs font-semibold text-slate-400">امتیاز ریکاوری</span>
+            <div class="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-400/30 text-amber-400 flex items-center justify-center shrink-0">
+              <i data-lucide="moon" class="w-4 h-4"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-1">
+            <span id="kpi-recovery" class="text-2xl sm:text-3xl font-black text-white tabular-nums">--</span>
+            <span class="text-[11px] text-slate-400">/۱۰۰</span>
+          </div>
+          <div class="mt-2.5 flex items-center justify-between text-[10px] sm:text-[11px] text-slate-400 tabular-nums">
+            <span id="kpi-sleep-mini">خواب: --س</span>
+            <span id="kpi-energy-mini" class="text-emerald-400 font-bold">انرژی: --</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick AI Insight Banner + 1-Click 14-Day Demo Trigger -->
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-violet-500/30 bg-gradient-to-l from-violet-600/15 via-obsidian-900/80 to-emerald-500/10">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3.5">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500/30 to-cyan-500/20 border border-violet-400/40 text-violet-300 flex items-center justify-center shrink-0">
+              <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-extrabold text-violet-300">تحلیل سریع هوش مصنوعی</span>
+                <span id="insight-tag" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">زنده</span>
+              </div>
+              <p id="ai-insight-text" class="text-xs sm:text-sm text-slate-200 mt-1 leading-relaxed">
+                هنوز داده‌ای ثبت نشده است. با یک کلیک ۱۴ روز داده نمونه واقعی بارگذاری کنید تا نمودارها و تحلیل‌ها فعال شوند.
+              </p>
+            </div>
+          </div>
+          <button type="button" id="banner-demo-btn" class="shrink-0 min-h-[42px] px-4 rounded-2xl text-xs font-extrabold bg-white/10 hover:bg-emerald-500/20 border border-white/15 hover:border-emerald-400/40 text-white hover:text-emerald-300 flex items-center justify-center gap-2 transition">
+            <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+            <span>بارگذاری داده نمونه ۱۴ روزه</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chart + Recent Logs Split -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Main Interactive Neon Area Chart (8 cols) -->
+        <div class="lg:col-span-8 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <h2 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_#00F5A0]"></span>
+                نمودار روند وزن و شاخص مکمل
+              </h2>
+              <p class="text-[11px] text-slate-400 mt-0.5">پایش دقیق تغییرات در بازه زمانی انتخابی</p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <!-- Secondary Dataset Toggle -->
+              <div class="inline-flex p-1 rounded-xl bg-obsidian-950/90 border border-white/10 text-[11px]">
+                <button type="button" data-metric="energy" class="metric-toggle-btn px-2.5 py-1 rounded-lg font-bold bg-cyan-500/20 text-cyan-300 transition">انرژی</button>
+                <button type="button" data-metric="bodyFat" class="metric-toggle-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white transition">درصد چربی</button>
+              </div>
+              <!-- Timeframe Pills -->
+              <div class="inline-flex p-1 rounded-xl bg-obsidian-950/90 border border-white/10 text-[11px]">
+                <button type="button" data-range="7" class="range-toggle-btn px-2 py-1 rounded-lg font-bold text-slate-400 hover:text-white transition">۷ روز</button>
+                <button type="button" data-range="14" class="range-toggle-btn px-2 py-1 rounded-lg font-bold bg-emerald-500/20 text-emerald-300 transition">۱۴ روز</button>
+                <button type="button" data-range="30" class="range-toggle-btn px-2 py-1 rounded-lg font-bold text-slate-400 hover:text-white transition">۳۰ روز</button>
+                <button type="button" data-range="all" class="range-toggle-btn px-2 py-1 rounded-lg font-bold text-slate-400 hover:text-white transition">همه</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative w-full h-[240px] sm:h-[310px]">
+            <canvas id="weightChart"></canvas>
+            <div id="chart-empty" class="hidden absolute inset-0 rounded-2xl border border-dashed border-white/10 bg-obsidian-950/60 flex flex-col items-center justify-center text-center p-4">
+              <i data-lucide="line-chart" class="w-8 h-8 text-slate-500 mb-2"></i>
+              <p class="text-xs sm:text-sm font-bold text-slate-300">هنوز نقطه‌ای برای نمایش نمودار ثبت نشده</p>
+              <p class="text-[11px] text-slate-500 mt-1">دکمه «داده نمونه» در بالای صفحه را بزنید یا وضعیت امروز را ثبت کنید</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Card (4 cols) -->
+        <div class="lg:col-span-4 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col">
+          <div class="flex items-center justify-between mb-3.5">
+            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <i data-lucide="history" class="w-4 h-4 text-cyan-400"></i>
+              آخرین ثبت‌ها
+            </h3>
+            <button type="button" id="dash-see-history-btn" class="text-xs font-bold text-cyan-300 hover:text-cyan-200 transition">مشاهده همه</button>
+          </div>
+          <div id="dash-recent-list" class="space-y-2.5 flex-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         TAB 2: LOG & HISTORY (ثبت روزانه)
+         ========================================================== -->
+    <section id="view-logs" class="hidden space-y-5 view-enter">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-black text-white">ثبت وضعیت روزانه و تاریخچه</h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-0.5">داده‌های دقیق روزانه، دقت برنامه تمرینی هوش مصنوعی را چند برابر می‌کند.</p>
+        </div>
+        <button type="button" id="logs-demo-btn" class="self-start sm:self-auto min-h-[40px] px-4 rounded-2xl text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/35 text-cyan-300 flex items-center gap-1.5 transition">
+          <i data-lucide="database" class="w-4 h-4"></i>
+          بارگذاری ۱۴ روز داده نمونه
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        <!-- Mobile-First Entry Form (5 cols) -->
+        <div class="lg:col-span-5 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm sm:text-base font-extrabold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              ثبت رکورد جدید
+            </h3>
+            <span id="form-date-preview" class="text-xs font-bold text-cyan-300"></span>
+          </div>
+
+          <form id="log-form" class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="f-date" class="block text-xs font-semibold text-slate-300 mb-1.5">تاریخ</label>
+                <input id="f-date" type="date" required class="neon-input w-full rounded-2xl px-3 py-2.5 tabular-nums" />
+              </div>
+              <div>
+                <label for="f-weight" class="block text-xs font-semibold text-slate-300 mb-1.5">وزن (کیلوگرم) *</label>
+                <input id="f-weight" type="number" step="0.1" min="30" max="250" required placeholder="84.5" class="neon-input w-full rounded-2xl px-3 py-2.5 tabular-nums" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="f-bodyfat" class="block text-xs font-semibold text-slate-300 mb-1.5">درصد چربی (اختیاری)</label>
+                <input id="f-bodyfat" type="number" step="0.1" min="3" max="60" placeholder="18.5" class="neon-input w-full rounded-2xl px-3 py-2.5 tabular-nums" />
+              </div>
+              <div>
+                <label for="f-sleep" class="block text-xs font-semibold text-slate-300 mb-1.5">ساعت خواب *</label>
+                <input id="f-sleep" type="number" step="0.5" min="0" max="20" required value="7.5" class="neon-input w-full rounded-2xl px-3 py-2.5 tabular-nums" />
+              </div>
+            </div>
+
+            <!-- Glowing Energy Slider -->
+            <div class="p-3.5 rounded-2xl bg-obsidian-950/70 border border-white/[0.08]">
+              <div class="flex items-center justify-between mb-2">
+                <label for="f-energy" class="text-xs font-bold text-slate-200">سطح انرژی (۱ تا ۱۰)</label>
+                <span id="f-energy-label" class="text-xs font-extrabold text-emerald-400 tabular-nums">۷ / ۱۰ — پرانرژی</span>
+              </div>
+              <input id="f-energy" type="range" min="1" max="10" value="7" class="neon-slider" />
+            </div>
+
+            <!-- Soreness Selectable Pills -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-300 mb-1.5">کوفتگی عضلانی</label>
+              <div class="grid grid-cols-3 gap-2">
+                <button type="button" data-soreness="کم" class="soreness-pill min-h-[44px] rounded-2xl text-xs font-extrabold border border-emerald-400/50 bg-emerald-500/15 text-emerald-300 transition">کم</button>
+                <button type="button" data-soreness="متوسط" class="soreness-pill min-h-[44px] rounded-2xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-400 transition">متوسط</button>
+                <button type="button" data-soreness="زیاد" class="soreness-pill min-h-[44px] rounded-2xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-400 transition">زیاد</button>
+              </div>
+              <input id="f-soreness" type="hidden" value="کم" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="f-calories" class="block text-xs font-semibold text-slate-300 mb-1.5">کالری (اختیاری)</label>
+                <input id="f-calories" type="number" step="10" min="0" max="10000" placeholder="2200" class="neon-input w-full rounded-2xl px-3 py-2.5 tabular-nums" />
+              </div>
+              <div>
+                <label for="f-protein" class="block text-xs font-semibold text-slate-300 mb-1.5">پروتئین گرم (اختیاری)</label>
+                <input id="f-protein" type="number" step="1" min="0" max="500" placeholder="160" class="neon-input w-full rounded-2xl px-3 py-2.5 tabular-nums" />
+              </div>
+            </div>
+
+            <div>
+              <label for="f-notes" class="block text-xs font-semibold text-slate-300 mb-1.5">یادداشت کوتاه</label>
+              <textarea id="f-notes" rows="2" placeholder="مثلاً: تمرین سینه عالی بود، انرژی بالا..." class="neon-input w-full rounded-2xl px-3.5 py-2.5 resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="save-log-btn" class="w-full btn-neon min-h-[48px] rounded-2xl text-sm flex items-center justify-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              ذخیره در تاریخچه
+            </button>
+          </form>
+        </div>
+
+        <!-- Searchable & Filterable History List (7 cols) -->
+        <div class="lg:col-span-7 glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <h3 class="text-sm sm:text-base font-extrabold text-white">تاریخچه ثبت‌شده‌ها</h3>
+              <p id="history-count" class="text-xs text-slate-400 mt-0.5 tabular-nums">۰ رکورد</p>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+              <div class="relative flex-1 sm:w-52">
+                <input id="history-search" type="text" placeholder="جستجو تاریخ، یادداشت..." class="neon-input w-full rounded-2xl pr-9 pl-3 py-2 !text-xs" />
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+              </div>
+              <select id="history-soreness-filter" class="neon-input rounded-2xl px-3 py-2 !text-xs shrink-0">
+                <option value="all">همه کوفتگی‌ها</option>
+                <option value="کم">کوفتگی کم</option>
+                <option value="متوسط">کوفتگی متوسط</option>
+                <option value="زیاد">کوفتگی زیاد</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="history-list" class="space-y-3 max-h-[660px] overflow-y-auto pl-1"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         TAB 3: AI COACH (مربی هوشمند)
+         ========================================================== -->
+    <section id="view-coach" class="hidden space-y-5 view-enter">
+      <!-- Coach Header & Sleek Inner Sub-Tabs -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-violet-500/20 text-violet-300 border border-violet-400/35 mb-1.5">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            موتور هوش مصنوعی Gemini
+          </span>
+          <h2 class="text-xl sm:text-2xl font-black text-white">مربی تمرینی هوشمند فیت‌مینو</h2>
+        </div>
+
+        <div class="grid grid-cols-3 md:inline-flex p-1 rounded-2xl tab-shell gap-1">
+          <button type="button" data-coach-sub="planner" class="coach-sub-btn min-h-[40px] px-3 sm:px-4 rounded-xl text-xs font-extrabold bg-violet-500/25 text-white border border-violet-400/40 transition">برنامه‌ساز</button>
+          <button type="button" data-coach-sub="saved" class="coach-sub-btn min-h-[40px] px-3 sm:px-4 rounded-xl text-xs font-bold text-slate-400 hover:text-white border border-transparent transition flex items-center justify-center gap-1">
+            <span>ذخیره‌ها</span>
+            <span id="saved-count-badge" class="px-1.5 py-0.5 rounded-md bg-white/10 text-[10px] tabular-nums">۰</span>
+          </button>
+          <button type="button" data-coach-sub="chat" class="coach-sub-btn min-h-[40px] px-3 sm:px-4 rounded-xl text-xs font-bold text-slate-400 hover:text-white border border-transparent transition">چت با مربی</button>
+        </div>
+      </div>
+
+      <!-- SUB-TAB A: WORKOUT PLANNER -->
+      <div id="coach-sub-planner" class="space-y-5">
+        <!-- Quick Preferences Card -->
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-violet-500/25 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Today's Goal -->
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-2">هدف امروز</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button type="button" data-goal="چربی‌سوزی" class="pref-goal-btn min-h-[40px] rounded-xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-300 transition">چربی‌سوزی</button>
+                <button type="button" data-goal="عضله‌سازی" class="pref-goal-btn min-h-[40px] rounded-xl text-xs font-extrabold border border-emerald-400/50 bg-emerald-500/15 text-emerald-300 transition">عضله‌سازی</button>
+                <button type="button" data-goal="ریکاوری" class="pref-goal-btn min-h-[40px] rounded-xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-300 transition">ریکاوری</button>
+              </div>
+            </div>
+
+            <!-- Duration -->
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-2">زمان تمرین</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button type="button" data-dur="30" class="pref-dur-btn min-h-[40px] rounded-xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-300 transition tabular-nums">۳۰ دقیقه</button>
+                <button type="button" data-dur="45" class="pref-dur-btn min-h-[40px] rounded-xl text-xs font-extrabold border border-cyan-400/50 bg-cyan-500/15 text-cyan-300 transition tabular-nums">۴۵ دقیقه</button>
+                <button type="button" data-dur="60" class="pref-dur-btn min-h-[40px] rounded-xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-300 transition tabular-nums">۶۰ دقیقه</button>
+              </div>
+            </div>
+
+            <!-- Muscle Group -->
+            <div>
+              <label for="pref-muscle" class="block text-xs font-bold text-slate-300 mb-2">گروه عضلانی</label>
+              <select id="pref-muscle" class="neon-input w-full min-h-[40px] rounded-xl px-3 py-2 !text-xs font-bold">
+                <option value="هوشمند (خودکار بر اساس ریکاوری من)">✨ هوشمند (بر اساس ریکاوری من)</option>
+                <option value="بالاتنه کامل">بالاتنه کامل</option>
+                <option value="پایین‌تنه و پا">پایین‌تنه و پا</option>
+                <option value="پوش (سینه، سرشانه، پشت‌بازو)">پوش (سینه، سرشانه، پشت‌بازو)</option>
+                <option value="پول (پشت، زیربغل، جلوبازو)">پول (پشت، زیربغل، جلوبازو)</option>
+                <option value="فول‌بادی">فول‌بادی</option>
+                <option value="شکم و هوازی">شکم و هوازی</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-2.5 pt-1">
+            <input id="ai-extra-note" type="text" placeholder="نکته دلخواه (مثلاً: کمی زانودرد دارم، تمرکز روی سرشانه...)" class="neon-input flex-1 rounded-2xl px-4 py-2.5" />
+            <button type="button" id="generate-ai-btn" class="btn-ai min-h-[48px] px-6 rounded-2xl text-sm flex items-center justify-center gap-2 shrink-0">
+              <i data-lucide="wand-2" class="w-4 h-4"></i>
+              ساخت برنامه هوشمند امروز
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading Skeleton -->
+        <div id="ai-skeleton" class="hidden glass-card rounded-3xl p-5 border border-violet-500/30 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-violet-500/20 flex items-center justify-center text-violet-300">
+              <i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>
+            </div>
+            <div>
+              <h4 class="text-sm font-extrabold text-white">در حال تحلیل روند وزن، خواب و کوفتگی شما...</h4>
+              <p class="text-xs text-slate-400">مربی هوشمند در حال چیدن حرکات، ست‌ها و تکرارهای دقیق است</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="h-28 rounded-2xl skeleton-neon"></div>
+            <div class="h-28 rounded-2xl skeleton-neon"></div>
+            <div class="h-28 rounded-2xl skeleton-neon"></div>
+            <div class="h-28 rounded-2xl skeleton-neon"></div>
+          </div>
+        </div>
+
+        <!-- Structured Workout Result -->
+        <div id="ai-result-container" class="hidden space-y-5 view-enter">
+          <!-- Plan Banner + Actions -->
+          <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-emerald-400/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="flex flex-wrap items-center gap-1.5 mb-1.5">
+                <span id="res-focus" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-400/30">تمرین</span>
+                <span id="res-duration" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-400/30 tabular-nums">۴۵ دقیقه</span>
+                <span id="res-readiness" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-violet-500/20 text-violet-300 border border-violet-400/35 tabular-nums">آمادگی: ۸۵٪</span>
+              </div>
+              <h3 id="res-title" class="text-lg sm:text-xl font-black text-white">برنامه اختصاصی شما</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" id="res-timer-btn" class="min-h-[42px] px-3.5 rounded-2xl text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/35 text-cyan-300 flex items-center gap-1.5 transition">
+                <i data-lucide="timer" class="w-4 h-4"></i>
+                تایمر استراحت
+              </button>
+              <button type="button" id="res-save-btn" class="btn-neon min-h-[42px] px-4 rounded-2xl text-xs flex items-center gap-1.5">
+                <i data-lucide="bookmark-plus" class="w-4 h-4"></i>
+                ذخیره برنامه
+              </button>
+            </div>
+          </div>
+
+          <!-- Analysis & Nutrition Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-violet-500/20">
+              <h4 class="text-xs font-extrabold text-violet-300 flex items-center gap-1.5 mb-2">
+                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                تحلیل روند بدنی شما
+              </h4>
+              <p id="res-analysis" class="text-xs sm:text-sm text-slate-200 leading-7"></p>
+              <div class="mt-3 p-3 rounded-2xl bg-obsidian-950/70 border border-white/[0.06]">
+                <span class="text-[11px] font-extrabold text-amber-400 block mb-1">گرم‌کردن پیشنهادی:</span>
+                <p id="res-warmup" class="text-xs text-slate-300 leading-6"></p>
+              </div>
+            </div>
+            <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-emerald-500/20">
+              <h4 class="text-xs font-extrabold text-emerald-300 flex items-center gap-1.5 mb-2.5">
+                <i data-lucide="utensils" class="w-4 h-4"></i>
+                توصیه تغذیه و ریکاوری امروز
+              </h4>
+              <div class="grid grid-cols-3 gap-2 mb-3">
+                <div class="p-2.5 rounded-xl bg-obsidian-950/70 border border-white/[0.06] text-center">
+                  <span class="text-[10px] text-slate-400 block">کالری</span>
+                  <span id="res-cal" class="text-xs sm:text-sm font-extrabold text-white tabular-nums">--</span>
+                </div>
+                <div class="p-2.5 rounded-xl bg-obsidian-950/70 border border-white/[0.06] text-center">
+                  <span class="text-[10px] text-slate-400 block">پروتئین</span>
+                  <span id="res-pro" class="text-xs sm:text-sm font-extrabold text-emerald-300 tabular-nums">--</span>
+                </div>
+                <div class="p-2.5 rounded-xl bg-obsidian-950/70 border border-white/[0.06] text-center">
+                  <span class="text-[10px] text-slate-400 block">خواب و آب</span>
+                  <span id="res-rec" class="text-xs sm:text-sm font-extrabold text-cyan-300 tabular-nums">--</span>
+                </div>
+              </div>
+              <p id="res-nutrition" class="text-xs sm:text-sm text-slate-200 leading-7"></p>
+            </div>
+          </div>
+
+          <!-- Live Workout Completion Progress Bar -->
+          <div class="glass-card rounded-2xl p-4">
+            <div class="flex items-center justify-between text-xs mb-2">
+              <span class="font-extrabold text-white">پیشرفت زنده تمرین</span>
+              <span id="live-sets-text" class="font-extrabold text-emerald-400 tabular-nums">۰ از ۰ ست (۰٪)</span>
+            </div>
+            <div class="w-full h-2.5 rounded-full bg-white/10 overflow-hidden">
+              <div id="live-sets-bar" class="h-full rounded-full bg-gradient-to-l from-emerald-400 to-cyan-400 shadow-[0_0_14px_rgba(0,245,160,0.85)] transition-all duration-300" style="width:0%"></div>
+            </div>
+          </div>
+
+          <!-- Exercise Cards Grid -->
+          <div id="exercises-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
+      </div>
+
+      <!-- SUB-TAB B: SAVED PLANS -->
+      <div id="coach-sub-saved" class="hidden">
+        <div id="saved-plans-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+
+      <!-- SUB-TAB C: AI COACH CHAT -->
+      <div id="coach-sub-chat" class="hidden">
+        <div class="glass-card rounded-2xl sm:rounded-3xl border border-violet-500/25 overflow-hidden flex flex-col h-[540px] sm:h-[580px]">
+          <div class="px-4 py-3.5 bg-obsidian-900/90 border-b border-white/[0.08] flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center text-white">
+                <i data-lucide="message-square-sparkles" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-extrabold text-white">گفتگوی مستقیم با مربی هوشمند</h3>
+                <p class="text-[10px] text-emerald-400">متصل به داده‌های واقعی وزن و ریکاوری شما</p>
+              </div>
+            </div>
+            <button type="button" id="reset-chat-btn" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-white/5 hover:bg-white/10 text-slate-300 transition">گفتگوی جدید</button>
+          </div>
+
+          <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3.5"></div>
+
+          <!-- Quick Prompts -->
+          <div class="px-3 py-2 bg-obsidian-950/60 border-t border-white/[0.06] flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <button type="button" class="quick-chat-btn shrink-0 px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-white/[0.05] hover:bg-violet-500/20 text-slate-300 border border-white/10 transition">روند وزنم چطوره؟</button>
+            <button type="button" class="quick-chat-btn shrink-0 px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-white/[0.05] hover:bg-violet-500/20 text-slate-300 border border-white/10 transition">پروتئین روزانه‌ام چقدر باشه؟</button>
+            <button type="button" class="quick-chat-btn shrink-0 px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-white/[0.05] hover:bg-violet-500/20 text-slate-300 border border-white/10 transition">برای رفع کوفتگی چیکار کنم؟</button>
+            <button type="button" class="quick-chat-btn shrink-0 px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-white/[0.05] hover:bg-violet-500/20 text-slate-300 border border-white/10 transition">جایگزین اسکوات چیه؟</button>
+          </div>
+
+          <form id="chat-form" class="p-3 bg-obsidian-900/90 border-t border-white/[0.08] flex items-center gap-2">
+            <input id="chat-input" type="text" required placeholder="سؤالت رو از مربی بپرس..." class="neon-input flex-1 rounded-2xl px-3.5 py-2.5" />
+            <button type="submit" id="chat-send-btn" class="btn-ai min-h-[44px] px-4 rounded-2xl text-xs flex items-center gap-1.5 shrink-0">
+              <span>ارسال</span>
+              <i data-lucide="send" class="w-4 h-4 -rotate-90"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         TAB 4: PROFILE & GOALS (پروفایل و هدف)
+         ========================================================== -->
+    <section id="view-profile" class="hidden space-y-5 view-enter">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-black text-white">پروفایل ورزشی و اهداف</h2>
+        <p class="text-xs sm:text-sm text-slate-400 mt-0.5">تمامی محاسبات متابولیسم، BMI و الگوریتم مربی هوشمند بر پایه این اطلاعات است.</p>
+      </div>
+
+      <!-- Live Calculated Neon Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-emerald-400/25">
+          <span class="text-xs text-slate-400 block mb-1">محدوده وزن ایده‌آل (BMI نرمال)</span>
+          <span id="calc-ideal-weight" class="text-xl sm:text-2xl font-black text-emerald-300 tabular-nums">-- تا -- کیلو</span>
+        </div>
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-cyan-400/25">
+          <span class="text-xs text-slate-400 block mb-1">تخمین BMR / کالری نگهداری (TDEE)</span>
+          <span id="calc-bmr-tdee" class="text-xl sm:text-2xl font-black text-cyan-300 tabular-nums">-- / --</span>
+        </div>
+        <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-violet-400/25">
+          <span class="text-xs text-slate-400 block mb-1">پروتئین روزانه پیشنهادی</span>
+          <span id="calc-protein" class="text-xl sm:text-2xl font-black text-violet-300 tabular-nums">-- گرم</span>
+        </div>
+      </div>
+
+      <!-- Editable Profile Form -->
+      <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6">
+        <form id="profile-form" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div>
+              <label for="p-name" class="block text-xs font-semibold text-slate-300 mb-1.5">نام</label>
+              <input id="p-name" type="text" required class="neon-input w-full rounded-2xl px-3.5 py-2.5" />
+            </div>
+            <div>
+              <label for="p-age" class="block text-xs font-semibold text-slate-300 mb-1.5">سن (سال)</label>
+              <input id="p-age" type="number" min="12" max="99" required class="neon-input w-full rounded-2xl px-3.5 py-2.5 tabular-nums" />
+            </div>
+            <div>
+              <label for="p-gender" class="block text-xs font-semibold text-slate-300 mb-1.5">جنسیت</label>
+              <select id="p-gender" class="neon-input w-full rounded-2xl px-3.5 py-2.5">
+                <option value="مرد">مرد</option>
+                <option value="زن">زن</option>
+              </select>
+            </div>
+            <div>
+              <label for="p-height" class="block text-xs font-semibold text-slate-300 mb-1.5">قد (سانتی‌متر)</label>
+              <input id="p-height" type="number" min="110" max="230" required class="neon-input w-full rounded-2xl px-3.5 py-2.5 tabular-nums" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <div>
+              <label for="p-target" class="block text-xs font-semibold text-slate-300 mb-1.5">وزن هدف (کیلوگرم)</label>
+              <input id="p-target" type="number" step="0.1" min="35" max="220" required class="neon-input w-full rounded-2xl px-3.5 py-2.5 tabular-nums" />
+            </div>
+            <div>
+              <label for="p-level" class="block text-xs font-semibold text-slate-300 mb-1.5">سطح آمادگی</label>
+              <select id="p-level" class="neon-input w-full rounded-2xl px-3.5 py-2.5">
+                <option value="مبتدی">مبتدی</option>
+                <option value="متوسط">متوسط</option>
+                <option value="حرفه‌ای">حرفه‌ای</option>
+              </select>
+            </div>
+            <div>
+              <label for="p-equipment" class="block text-xs font-semibold text-slate-300 mb-1.5">تجهیزات در دسترس</label>
+              <select id="p-equipment" class="neon-input w-full rounded-2xl px-3.5 py-2.5">
+                <option value="باشگاه کامل">باشگاه کامل</option>
+                <option value="دمبل در خانه">دمبل در خانه</option>
+                <option value="وزن بدن">وزن بدن</option>
+              </select>
+            </div>
+            <div>
+              <label for="p-days" class="block text-xs font-semibold text-slate-300 mb-1.5">روزهای تمرین در هفته</label>
+              <select id="p-days" class="neon-input w-full rounded-2xl px-3.5 py-2.5 tabular-nums">
+                <option value="2">۲ روز در هفته</option>
+                <option value="3">۳ روز در هفته</option>
+                <option value="4">۴ روز در هفته</option>
+                <option value="5">۵ روز در هفته</option>
+                <option value="6">۶ روز در هفته</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span class="text-[11px] text-slate-500">شناسه نشست ابری: <code id="p-uid" class="text-slate-300 font-mono" dir="ltr">---</code></span>
+            <button type="submit" id="save-profile-btn" class="btn-neon min-h-[46px] px-7 rounded-2xl text-sm flex items-center justify-center gap-2">
+              <i data-lucide="save" class="w-4 h-4"></i>
+              ذخیره پروفایل و اهداف
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       APPLICATION SCRIPT (Firebase + Gemini AI + Chart.js + Timer)
+       ============================================================ -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, addDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // ------------------------------------------------------------
+    // 1. STATE & CONSTANTS
+    // ------------------------------------------------------------
+    const state = {
+      view: 'dashboard',
+      coachSub: 'planner',
+      user: null,
+      userId: null,
+      cloudReady: false,
+      profile: {
+        name: 'آرش',
+        age: 28,
+        gender: 'مرد',
+        height: 180,
+        targetWeight: 82,
+        level: 'متوسط',
+        equipment: 'باشگاه کامل',
+        weeklyDays: 4
+      },
+      logs: [],
+      savedPlans: [],
+      currentPlan: null,
+      chartRange: '14',
+      chartMetric: 'energy',
+      prefGoal: 'عضله‌سازی',
+      prefDuration: 45,
+      chatHistory: [],
+      timer: { total: 90, remaining: 90, running: false, id: null, label: 'استراحت بین ست‌ها' }
+    };
+
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'fitmino-pro-app';
+    const apiKey = "";
+    const RING_LEN = 2 * Math.PI * 76;
+    let db = null;
+    let auth = null;
+    let weightChart = null;
+
+    // ------------------------------------------------------------
+    // 2. HELPERS (Persian Digits, Dates, Toasts, Modal, Audio)
+    // ------------------------------------------------------------
+    const fa = (v) => {
+      if (v === null || v === undefined) return '';
+      const d = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+      return String(v).replace(/\d/g, (n) => d[Number(n)]);
+    };
+
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+
+    const todayISO = () => {
+      const n = new Date();
+      return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}`;
+    };
+
+    const faDate = (iso, full = false) => {
+      if (!iso) return '---';
+      try {
+        const [y, m, d] = iso.split('-').map(Number);
+        const dt = y && m && d ? new Date(y, m - 1, d) : new Date(iso);
+        return new Intl.DateTimeFormat('fa-IR', full
+          ? { weekday: 'long', month: 'long', day: 'numeric' }
+          : { month: 'short', day: 'numeric', year: 'numeric' }).format(dt);
+      } catch { return iso; }
+    };
+
+    const shortChartDate = (iso) => {
+      try {
+        const [y, m, d] = iso.split('-').map(Number);
+        return new Intl.DateTimeFormat('fa-IR', { month: 'short', day: 'numeric' }).format(new Date(y, m - 1, d));
+      } catch { return iso; }
+    };
+
+    function refreshIcons() {
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function showToast(msg, type = 'success') {
+      const wrap = document.getElementById('toast-container');
+      const palette = {
+        success: 'border-emerald-400/45 text-emerald-300',
+        info: 'border-cyan-400/45 text-cyan-300',
+        warning: 'border-amber-400/45 text-amber-300',
+        error: 'border-rose-400/45 text-rose-300'
+      };
+      const el = document.createElement('div');
+      el.className = `pointer-events-auto glass-card rounded-2xl px-4 py-3 border bg-obsidian-900/95 flex items-center gap-2.5 text-xs font-bold view-enter ${palette[type] || palette.success}`;
+      el.innerHTML = `<span class="w-2 h-2 rounded-full shrink-0" style="background:currentColor;box-shadow:0 0 10px currentColor"></span><span class="text-slate-100 leading-relaxed">${esc(msg)}</span>`;
+      wrap.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-6px)';
+        el.style.transition = 'all 0.22s ease';
+        setTimeout(() => el.remove(), 240);
+      }, 3400);
+    }
+
+    function askConfirm(title, message) {
+      return new Promise((resolve) => {
+        const modal = document.getElementById('confirm-modal');
+        document.getElementById('confirm-title').textContent = title;
+        document.getElementById('confirm-message').textContent = message;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        const ok = document.getElementById('confirm-ok-btn');
+        const cancel = document.getElementById('confirm-cancel-btn');
+        const done = (val) => {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+          ok.removeEventListener('click', onOk);
+          cancel.removeEventListener('click', onCancel);
+          resolve(val);
+        };
+        const onOk = () => done(true);
+        const onCancel = () => done(false);
+        ok.addEventListener('click', onOk);
+        cancel.addEventListener('click', onCancel);
+      });
+    }
+
+    function playChime() {
+      try {
+        const Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        const ctx = new Ctx();
+        [523.25, 659.25, 783.99].forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.13);
+          gain.gain.setValueAtTime(0.14, ctx.currentTime + i * 0.13);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.13 + 0.42);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime + i * 0.13);
+          osc.stop(ctx.currentTime + i * 0.13 + 0.44);
+        });
+      } catch { /* silent fallback */ }
+    }
+
+    // ------------------------------------------------------------
+    // 3. FIREBASE FIRESTORE (STRICT 3 RULES + GRACEFUL MEMORY FALLBACK)
+    // ------------------------------------------------------------
+    async function initCloud() {
+      try {
+        if (typeof __firebase_config === 'undefined' || !__firebase_config) throw new Error('no-config');
+        const cfg = typeof __firebase_config === 'string' ? JSON.parse(__firebase_config) : __firebase_config;
+        const app = initializeApp(cfg);
+        db = getFirestore(app);
+        auth = getAuth(app);
+
+        // RULE 3: Authenticate FIRST before any Firestore query
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        onAuthStateChanged(auth, (user) => {
+          if (!user) return;
+          state.user = user;
+          state.userId = user.uid;
+          state.cloudReady = true;
+          updateSyncUI(true);
+          subscribeCloud();
+        });
+      } catch {
+        state.cloudReady = false;
+        state.userId = 'session-' + Math.random().toString(36).slice(2, 8);
+        updateSyncUI(false);
+        renderAll();
+      }
+    }
+
+    function updateSyncUI(isCloud) {
+      const dot = document.getElementById('sync-dot');
+      const lbl = document.getElementById('sync-label');
+      document.getElementById('p-uid').textContent = state.userId || '---';
+      if (isCloud) {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse';
+        lbl.textContent = 'همگام ابری فعال';
+      } else {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-cyan-400';
+        lbl.textContent = 'نشست سریع';
+      }
+    }
+
+    function subscribeCloud() {
+      if (!state.user || !db) return;
+      const uid = state.userId;
+
+      // RULE 1: Strict /artifacts/{appId}/users/{userId}/{collection}
+      // RULE 2: Simple collection/doc fetches only, sort in JS memory
+      onSnapshot(
+        doc(db, 'artifacts', appId, 'users', uid, 'profile', 'main'),
+        (snap) => {
+          if (snap.exists()) state.profile = { ...state.profile, ...snap.data() };
+          fillProfileForm();
+          renderAll();
+        },
+        () => showToast('خطا در دریافت پروفایل ابری', 'error')
+      );
+
+      onSnapshot(
+        collection(db, 'artifacts', appId, 'users', uid, 'healthLogs'),
+        (snap) => {
+          const arr = [];
+          snap.forEach((d) => arr.push({ id: d.id, ...d.data() }));
+          arr.sort((a, b) => String(b.date).localeCompare(String(a.date)) || (b.createdAt || 0) - (a.createdAt || 0));
+          state.logs = arr;
+          renderAll();
+        },
+        () => showToast('خطا در همگام‌سازی تاریخچه', 'error')
+      );
+
+      onSnapshot(
+        collection(db, 'artifacts', appId, 'users', uid, 'workoutPlans'),
+        (snap) => {
+          const arr = [];
+          snap.forEach((d) => arr.push({ id: d.id, ...d.data() }));
+          arr.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+          state.savedPlans = arr;
+          renderSavedPlans();
+        },
+        () => showToast('خطا در دریافت برنامه‌های ذخیره', 'error')
+      );
+    }
+
+    async function saveProfile(data) {
+      state.profile = { ...state.profile, ...data };
+      if (state.cloudReady && state.user && db) {
+        await setDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'profile', 'main'), { ...state.profile, updatedAt: Date.now() }, { merge: true });
+      }
+      renderAll();
+    }
+
+    async function addLog(entry) {
+      const payload = { ...entry, createdAt: Date.now() };
+      if (state.cloudReady && state.user && db) {
+        await addDoc(collection(db, 'artifacts', appId, 'users', state.userId, 'healthLogs'), payload);
+      } else {
+        state.logs.unshift({ id: 'l-' + Date.now() + Math.random().toString(16).slice(2), ...payload });
+        state.logs.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+        renderAll();
+      }
+    }
+
+    async function removeLog(id) {
+      if (state.cloudReady && state.user && db) {
+        await deleteDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'healthLogs', id));
+      } else {
+        state.logs = state.logs.filter(x => x.id !== id);
+        renderAll();
+      }
+    }
+
+    async function savePlan(plan) {
+      const payload = { ...plan, savedDate: todayISO(), createdAt: Date.now() };
+      if (state.cloudReady && state.user && db) {
+        await addDoc(collection(db, 'artifacts', appId, 'users', state.userId, 'workoutPlans'), payload);
+      } else {
+        state.savedPlans.unshift({ id: 'p-' + Date.now(), ...payload });
+        renderSavedPlans();
+      }
+    }
+
+    async function removePlan(id) {
+      if (state.cloudReady && state.user && db) {
+        await deleteDoc(doc(db, 'artifacts', appId, 'users', state.userId, 'workoutPlans', id));
+      } else {
+        state.savedPlans = state.savedPlans.filter(x => x.id !== id);
+        renderSavedPlans();
+      }
+    }
+
+    async function loadDemo14Days() {
+      const btns = ['header-demo-btn', 'banner-demo-btn', 'logs-demo-btn'].map(id => document.getElementById(id));
+      btns.forEach(b => { if (b) b.disabled = true; });
+      try {
+        const rows = [
+          { off: 13, w: 87.4, bf: 20.8, sl: 6.5, en: 6, sr: 'متوسط', cal: 2520, pro: 145, n: 'شروع دوره جدید و تمرین فول‌بادی' },
+          { off: 12, w: 87.1, bf: 20.6, sl: 7.5, en: 7, sr: 'کم',    cal: 2340, pro: 158, n: 'تمرین پوش (سینه و سرشانه) با ریتم کنترل‌شده' },
+          { off: 11, w: 86.9, bf: 20.5, sl: 8.0, en: 8, sr: 'متوسط', cal: 2290, pro: 162, n: 'تمرین پول و زیربغل، کیفیت خواب عالی' },
+          { off: 10, w: 87.0, bf: 20.5, sl: 6.0, en: 5, sr: 'زیاد',  cal: 2410, pro: 142, n: 'کم‌خوابی و کوفتگی بالا — فقط پیاده‌روی سبک' },
+          { off: 9,  w: 86.5, bf: 20.3, sl: 7.5, en: 8, sr: 'کم',    cal: 2260, pro: 165, n: 'روز پا سنگین (اسکوات و ددلیفت رومانیایی)' },
+          { off: 8,  w: 86.3, bf: 20.1, sl: 7.0, en: 7, sr: 'زیاد',  cal: 2270, pro: 160, n: 'کوفتگی چهارسر، کشش و ریکاوری فعال' },
+          { off: 7,  w: 86.0, bf: 19.9, sl: 8.5, en: 9, sr: 'کم',    cal: 2210, pro: 170, n: 'رکورد جدید پرس بالاسینه دمبل با انرژی فوق‌العاده' },
+          { off: 6,  w: 85.8, bf: 19.8, sl: 7.5, en: 8, sr: 'متوسط', cal: 2230, pro: 164, n: 'پشت و جلوبازو + ۱۵ دقیقه هوازی' },
+          { off: 5,  w: 85.9, bf: 19.8, sl: 6.5, en: 6, sr: 'متوسط', cal: 2380, pro: 152, n: 'روز پرمشغله، تمرین شکم و کاردیو کوتاه' },
+          { off: 4,  w: 85.5, bf: 19.6, sl: 8.0, en: 8, sr: 'کم',    cal: 2220, pro: 168, n: 'سرشانه و بازو با پمپ عالی' },
+          { off: 3,  w: 85.2, bf: 19.4, sl: 7.5, en: 8, sr: 'متوسط', cal: 2190, pro: 172, n: 'تمرین پا و همسترینگ + تغذیه منظم' },
+          { off: 2,  w: 85.0, bf: 19.3, sl: 7.0, en: 7, sr: 'زیاد',  cal: 2250, pro: 162, n: 'کمی خستگی پاها، ۴۰ دقیقه پیاده‌روی تند' },
+          { off: 1,  w: 84.8, bf: 19.1, sl: 8.0, en: 9, sr: 'کم',    cal: 2200, pro: 170, n: 'تمرین پوش پرشدت و ریکاوری عالی' },
+          { off: 0,  w: 84.5, bf: 18.9, sl: 7.5, en: 8, sr: 'کم',    cal: 2180, pro: 170, n: 'حس سبکی و آمادگی کامل برای ادامه روند' }
+        ];
+        const existing = new Set(state.logs.map(l => l.date));
+        const now = new Date();
+        let added = 0;
+        for (const r of rows) {
+          const dt = new Date(now);
+          dt.setDate(now.getDate() - r.off);
+          const iso = `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+          if (existing.has(iso)) continue;
+          await addLog({ date: iso, weight: r.w, bodyFat: r.bf, sleep: r.sl, energy: r.en, soreness: r.sr, calories: r.cal, protein: r.pro, notes: r.n });
+          added++;
+        }
+        showToast(added ? `${fa(added)} روز داده نمونه واقعی بارگذاری شد!` : 'داده‌های ۱۴ روز اخیر قبلاً ثبت شده‌اند.', added ? 'success' : 'info');
+      } catch {
+        showToast('خطا در بارگذاری داده‌های نمونه', 'error');
+      } finally {
+        btns.forEach(b => { if (b) b.disabled = false; });
+      }
+    }
+
+    // ------------------------------------------------------------
+    // 4. NAVIGATION & RENDERING
+    // ------------------------------------------------------------
+    function switchView(name) {
+      state.view = name;
+      ['dashboard', 'logs', 'coach', 'profile'].forEach(v => {
+        const sec = document.getElementById(`view-${v}`);
+        if (sec) sec.classList.toggle('hidden', v !== name);
+      });
+      document.querySelectorAll('.top-nav-btn').forEach(btn => {
+        const active = btn.dataset.nav === name;
+        btn.classList.toggle('top-tab-active', active);
+        if (!active) {
+          btn.classList.add('text-slate-400');
+        } else {
+          btn.classList.remove('text-slate-400');
+        }
+      });
+      if (name === 'dashboard') setTimeout(renderChart, 40);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchCoachSub(sub) {
+      state.coachSub = sub;
+      ['planner', 'saved', 'chat'].forEach(s => {
+        document.getElementById(`coach-sub-${s}`).classList.toggle('hidden', s !== sub);
+      });
+      document.querySelectorAll('.coach-sub-btn').forEach(btn => {
+        const active = btn.dataset.coachSub === sub;
+        btn.className = active
+          ? 'coach-sub-btn min-h-[40px] px-3 sm:px-4 rounded-xl text-xs font-extrabold bg-violet-500/25 text-white border border-violet-400/40 transition flex items-center justify-center gap-1'
+          : 'coach-sub-btn min-h-[40px] px-3 sm:px-4 rounded-xl text-xs font-bold text-slate-400 hover:text-white border border-transparent transition flex items-center justify-center gap-1';
+      });
+    }
+
+    function renderAll() {
+      renderDashboard();
+      renderChart();
+      renderHistory();
+      renderProfileCalcs();
+      refreshIcons();
+    }
+
+    function renderDashboard() {
+      const p = state.profile;
+      const logs = state.logs;
+      document.getElementById('dash-name').textContent = p.name || 'ورزشکار';
+      document.getElementById('dash-date-pill').textContent = faDate(todayISO(), true);
+      document.getElementById('dash-count-pill').textContent = `${fa(logs.length)} ثبت`;
+      document.getElementById('kpi-goal-val').textContent = `هدف ${fa(p.targetWeight)}`;
+
+      if (!logs.length) {
+        document.getElementById('kpi-weight').textContent = '--';
+        document.getElementById('kpi-delta').textContent = 'در انتظار ثبت';
+        document.getElementById('kpi-delta').className = 'text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg bg-white/5 text-slate-400 tabular-nums';
+        document.getElementById('kpi-fat-mini').textContent = 'چربی: --٪';
+        document.getElementById('kpi-goal-rem').textContent = '--';
+        document.getElementById('kpi-goal-pct').textContent = '۰٪';
+        document.getElementById('kpi-goal-bar').style.width = '0%';
+        document.getElementById('kpi-bmi').textContent = '--';
+        document.getElementById('kpi-bmi-status').textContent = 'نامشخص';
+        document.getElementById('kpi-recovery').textContent = '--';
+        document.getElementById('kpi-sleep-mini').textContent = 'خواب: --';
+        document.getElementById('kpi-energy-mini').textContent = 'انرژی: --';
+        document.getElementById('ai-insight-text').textContent = 'هنوز رکوردی ثبت نشده است. با زدن دکمه «بارگذاری داده نمونه ۱۴ روزه» فوراً تمام نمودارها و تحلیل هوشمند را تست کنید.';
+        document.getElementById('dash-recent-list').innerHTML = `<div class="text-center py-8 text-xs text-slate-500">هنوز رکوردی ثبت نشده است.</div>`;
+        return;
+      }
+
+      const latest = logs[0];
+      const prev = logs[1] || null;
+      const oldest = logs[logs.length - 1];
+      const curW = Number(latest.weight);
+      const tgtW = Number(p.targetWeight) || 82;
+      const hM = (Number(p.height) || 180) / 100;
+
+      // Weight & Delta
+      document.getElementById('kpi-weight').textContent = fa(curW.toFixed(1));
+      document.getElementById('kpi-fat-mini').textContent = latest.bodyFat ? `چربی: ${fa(Number(latest.bodyFat).toFixed(1))}٪` : 'چربی: --';
+      const deltaEl = document.getElementById('kpi-delta');
+      if (prev) {
+        const diff = curW - Number(prev.weight);
+        if (Math.abs(diff) < 0.05) {
+          deltaEl.textContent = 'ثابت نسبت به قبل';
+          deltaEl.className = 'text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg bg-white/5 text-slate-300 tabular-nums';
+        } else {
+          const good = (tgtW < Number(prev.weight) && diff < 0) || (tgtW > Number(prev.weight) && diff > 0);
+          deltaEl.textContent = `${diff < 0 ? '▼' : '▲'} ${fa(Math.abs(diff).toFixed(1))} کیلو`;
+          deltaEl.className = good
+            ? 'text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 rounded-lg bg-emerald-500/15 text-emerald-300 tabular-nums'
+            : 'text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 rounded-lg bg-amber-500/15 text-amber-300 tabular-nums';
+        }
+      } else {
+        deltaEl.textContent = 'اولین ثبت';
+        deltaEl.className = 'text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-lg bg-cyan-500/15 text-cyan-300';
+      }
+
+      // Goal Progress
+      const rem = Math.abs(curW - tgtW);
+      const span = Math.abs(Number(oldest.weight) - tgtW);
+      let pct = rem <= 0.2 ? 100 : (span > 0.2 ? Math.max(5, Math.min(100, Math.round(((span - rem) / span) * 100))) : 50);
+      document.getElementById('kpi-goal-rem').textContent = fa(rem.toFixed(1));
+      document.getElementById('kpi-goal-pct').textContent = `${fa(pct)}٪`;
+      document.getElementById('kpi-goal-bar').style.width = `${pct}%`;
+
+      // BMI
+      const bmi = curW / (hM * hM);
+      document.getElementById('kpi-bmi').textContent = fa(bmi.toFixed(1));
+      const bmiSt = document.getElementById('kpi-bmi-status');
+      if (bmi < 18.5) { bmiSt.textContent = 'کمبود وزن'; bmiSt.className = 'text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-400/30'; }
+      else if (bmi < 25) { bmiSt.textContent = 'نرمال'; bmiSt.className = 'text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/30'; }
+      else if (bmi < 30) { bmiSt.textContent = 'اضافه‌وزن'; bmiSt.className = 'text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/30'; }
+      else { bmiSt.textContent = 'بالا'; bmiSt.className = 'text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-400/30'; }
+
+      // Recovery Score (0-100 based on last 7 logs sleep, energy, soreness)
+      const r7 = logs.slice(0, 7);
+      const avgSleep = r7.reduce((s, x) => s + (Number(x.sleep) || 0), 0) / r7.length;
+      const avgEnergy = r7.reduce((s, x) => s + (Number(x.energy) || 0), 0) / r7.length;
+      const sorePenalty = latest.soreness === 'زیاد' ? 14 : (latest.soreness === 'متوسط' ? 6 : 0);
+      const recScore = Math.max(20, Math.min(100, Math.round((Math.min(avgSleep, 8.5) / 8.5) * 48 + (avgEnergy / 10) * 52 - sorePenalty)));
+      document.getElementById('kpi-recovery').textContent = fa(recScore);
+      document.getElementById('kpi-sleep-mini').textContent = `خواب ${fa(avgSleep.toFixed(1))}س`;
+      document.getElementById('kpi-energy-mini').textContent = `انرژی ${fa(avgEnergy.toFixed(1))}/۱۰`;
+
+      // Dynamic AI Quick Insight Summary
+      const totalChange = curW - Number(oldest.weight);
+      const changeText = Math.abs(totalChange) < 0.1
+        ? 'وزن شما در دوره اخیر ثابت بوده است'
+        : `وزن شما ${fa(Math.abs(totalChange).toFixed(1))} کیلوگرم ${totalChange < 0 ? 'کاهش' : 'افزایش'} داشته است`;
+      const recAdvice = recScore >= 75
+        ? 'ریکاوری و انرژی شما عالی است؛ امروز زمان مناسبی برای تمرین پرفشار و رکوردشکنی است!'
+        : (recScore >= 55
+          ? 'ریکاوری شما متعادل است؛ یک تمرین استاندارد با کنترل شدت (RPE ۷ تا ۸) پیشنهاد می‌شود.'
+          : 'خواب یا کوفتگی اخیر نشان می‌دهد بدن نیاز به ریکاوری فعال، کشش یا تمرین سبک‌تر دارد.');
+      document.getElementById('ai-insight-text').textContent = `در ${fa(logs.length)} ثبت اخیر، ${changeText} و امتیاز ریکاوری شما ${fa(recScore)} از ۱۰۰ است. ${recAdvice}`;
+
+      // Recent 4 Snapshot
+      document.getElementById('dash-recent-list').innerHTML = logs.slice(0, 4).map((l, idx) => {
+        const nxt = logs[idx + 1];
+        let arrow = '<span class="text-[10px] text-slate-500">—</span>';
+        if (nxt) {
+          const d = Number(l.weight) - Number(nxt.weight);
+          if (Math.abs(d) >= 0.05) {
+            arrow = `<span class="text-[11px] font-extrabold tabular-nums ${d < 0 ? 'text-emerald-400' : 'text-amber-400'}">${d < 0 ? '▼' : '▲'} ${fa(Math.abs(d).toFixed(1))}</span>`;
+          }
+        }
+        return `
+          <div class="flex items-center justify-between p-3 rounded-2xl bg-obsidian-950/65 border border-white/[0.06]">
+            <div class="min-w-0">
+              <div class="text-xs font-bold text-white truncate">${faDate(l.date)}</div>
+              <div class="text-[11px] text-slate-400 mt-0.5 tabular-nums">خواب ${fa(l.sleep)}س • انرژی ${fa(l.energy)}/۱۰</div>
+            </div>
+            <div class="text-left shrink-0">
+              <div class="text-sm font-black text-white tabular-nums">${fa(Number(l.weight).toFixed(1))} <span class="text-[10px] font-normal text-slate-400">کیلو</span></div>
+              ${arrow}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderChart() {
+      const canvas = document.getElementById('weightChart');
+      const empty = document.getElementById('chart-empty');
+      if (!canvas) return;
+
+      const asc = [...state.logs].reverse();
+      let list = asc;
+      if (state.chartRange !== 'all') list = asc.slice(-Number(state.chartRange));
+
+      if (!list.length) {
+        empty.classList.remove('hidden');
+        if (weightChart) { weightChart.destroy(); weightChart = null; }
+        return;
+      }
+      empty.classList.add('hidden');
+
+      const ctx = canvas.getContext('2d');
+      const isEnergy = state.chartMetric === 'energy';
+
+      const g1 = ctx.createLinearGradient(0, 0, 0, 290);
+      g1.addColorStop(0, 'rgba(0, 245, 160, 0.34)');
+      g1.addColorStop(1, 'rgba(0, 245, 160, 0)');
+
+      const g2 = ctx.createLinearGradient(0, 0, 0, 290);
+      g2.addColorStop(0, 'rgba(6, 182, 212, 0.22)');
+      g2.addColorStop(1, 'rgba(6, 182, 212, 0)');
+
+      if (weightChart) weightChart.destroy();
+      weightChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: list.map(i => shortChartDate(i.date)),
+          datasets: [
+            {
+              label: 'وزن (کیلو)',
+              data: list.map(i => Number(i.weight)),
+              yAxisID: 'yW',
+              borderColor: '#00F5A0',
+              backgroundColor: g1,
+              borderWidth: 2.8,
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: '#050811',
+              pointBorderColor: '#00F5A0',
+              pointBorderWidth: 2.2,
+              pointRadius: 3.5,
+              pointHoverRadius: 6
+            },
+            {
+              label: isEnergy ? 'انرژی (۱-۱۰)' : 'درصد چربی (٪)',
+              data: list.map(i => isEnergy ? Number(i.energy || 0) : (i.bodyFat ? Number(i.bodyFat) : null)),
+              yAxisID: 'yS',
+              borderColor: '#06B6D4',
+              backgroundColor: g2,
+              borderWidth: 2,
+              borderDash: [5, 4],
+              fill: true,
+              tension: 0.4,
+              spanGaps: true,
+              pointRadius: 3,
+              pointBackgroundColor: '#050811',
+              pointBorderColor: '#06B6D4'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: {
+              position: 'top',
+              align: 'end',
+              rtl: true,
+              labels: { color: '#CBD5E1', usePointStyle: true, boxWidth: 8, font: { family: 'Vazirmatn', size: 11, weight: '600' } }
+            },
+            tooltip: {
+              rtl: true,
+              backgroundColor: 'rgba(10, 15, 30, 0.96)',
+              borderColor: 'rgba(0, 245, 160, 0.35)',
+              borderWidth: 1,
+              cornerRadius: 12,
+              padding: 10,
+              titleFont: { family: 'Vazirmatn', size: 12, weight: '700' },
+              bodyFont: { family: 'Vazirmatn', size: 11 },
+              callbacks: {
+                label: (c) => ` ${c.dataset.label}: ${c.parsed.y !== null ? fa(c.parsed.y) : 'ثبت‌نشده'}`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255,255,255,0.04)' },
+              ticks: { color: '#94A3B8', font: { family: 'Vazirmatn', size: 10 }, maxRotation: 0 }
+            },
+            yW: {
+              position: 'right',
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { color: '#00F5A0', font: { family: 'Vazirmatn', size: 10 }, callback: v => fa(v) }
+            },
+            yS: {
+              position: 'left',
+              min: isEnergy ? 0 : undefined,
+              max: isEnergy ? 10 : undefined,
+              grid: { drawOnChartArea: false },
+              ticks: { color: '#06B6D4', font: { family: 'Vazirmatn', size: 10 }, callback: v => fa(v) }
+            }
+          }
+        }
+      });
+    }
+
+    function renderHistory() {
+      const box = document.getElementById('history-list');
+      const q = (document.getElementById('history-search').value || '').trim().toLowerCase();
+      const sFilter = document.getElementById('history-soreness-filter').value;
+
+      const items = state.logs.filter(l => {
+        if (sFilter !== 'all' && l.soreness !== sFilter) return false;
+        if (!q) return true;
+        return faDate(l.date).toLowerCase().includes(q) || (l.notes || '').toLowerCase().includes(q) || String(l.weight).includes(q);
+      });
+
+      document.getElementById('history-count').textContent = `${fa(items.length)} رکورد`;
+      if (!items.length) {
+        box.innerHTML = `<div class="text-center py-10 rounded-2xl border border-dashed border-white/10 text-xs text-slate-400">رکوردی برای نمایش وجود ندارد.</div>`;
+        return;
+      }
+
+      box.innerHTML = items.map(l => {
+        const idx = state.logs.findIndex(x => x.id === l.id);
+        const prev = idx >= 0 ? state.logs[idx + 1] : null;
+        let badge = '';
+        if (prev) {
+          const d = Number(l.weight) - Number(prev.weight);
+          if (Math.abs(d) >= 0.05) {
+            badge = `<span class="px-2 py-0.5 rounded-lg text-[10px] font-extrabold tabular-nums ${d < 0 ? 'bg-emerald-500/15 text-emerald-300' : 'bg-amber-500/15 text-amber-300'}">${d < 0 ? '▼' : '▲'} ${fa(Math.abs(d).toFixed(1))} کیلو</span>`;
+          }
+        }
+        const srCls = l.soreness === 'زیاد'
+          ? 'bg-rose-500/15 text-rose-300 border-rose-400/30'
+          : (l.soreness === 'متوسط' ? 'bg-amber-500/15 text-amber-300 border-amber-400/30' : 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30');
+
+        return `
+          <div class="p-3.5 sm:p-4 rounded-2xl bg-obsidian-950/70 border border-white/[0.07] hover:border-white/15 transition">
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs sm:text-sm font-extrabold text-white">${faDate(l.date)}</span>
+                ${badge}
+              </div>
+              <button type="button" data-del-log="${esc(l.id)}" class="del-log-btn w-8 h-8 rounded-xl bg-white/[0.04] hover:bg-rose-500/20 text-slate-400 hover:text-rose-300 flex items-center justify-center transition" title="حذف">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+              <div class="px-2.5 py-2 rounded-xl bg-white/[0.03]"><span class="text-[10px] text-slate-400 block">وزن</span><span class="font-extrabold text-white tabular-nums">${fa(Number(l.weight).toFixed(1))} کیلو</span></div>
+              <div class="px-2.5 py-2 rounded-xl bg-white/[0.03]"><span class="text-[10px] text-slate-400 block">خواب</span><span class="font-bold text-cyan-300 tabular-nums">${fa(l.sleep)} ساعت</span></div>
+              <div class="px-2.5 py-2 rounded-xl bg-white/[0.03]"><span class="text-[10px] text-slate-400 block">انرژی</span><span class="font-bold text-emerald-300 tabular-nums">${fa(l.energy)} / ۱۰</span></div>
+              <div class="px-2.5 py-2 rounded-xl bg-white/[0.03]"><span class="text-[10px] text-slate-400 block">کوفتگی</span><span class="inline-block px-2 py-0.5 mt-0.5 rounded-md text-[10px] font-bold border ${srCls}">${esc(l.soreness || 'کم')}</span></div>
+            </div>
+            ${(l.bodyFat || l.calories || l.protein) ? `
+              <div class="flex flex-wrap gap-1.5 mt-2.5 text-[10px] text-slate-400 tabular-nums">
+                ${l.bodyFat ? `<span class="px-2 py-0.5 rounded-lg bg-white/[0.04]">چربی ${fa(l.bodyFat)}٪</span>` : ''}
+                ${l.calories ? `<span class="px-2 py-0.5 rounded-lg bg-white/[0.04]">کالری ${fa(l.calories)}</span>` : ''}
+                ${l.protein ? `<span class="px-2 py-0.5 rounded-lg bg-white/[0.04]">پروتئین ${fa(l.protein)} گرم</span>` : ''}
+              </div>` : ''}
+            ${l.notes ? `<p class="mt-2.5 text-xs text-slate-300 bg-white/[0.025] p-2.5 rounded-xl leading-relaxed">${esc(l.notes)}</p>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      box.querySelectorAll('.del-log-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const ok = await askConfirm('حذف رکورد', 'این ثبت از تاریخچه شما حذف شود؟');
+          if (!ok) return;
+          await removeLog(btn.dataset.delLog);
+          showToast('رکورد حذف شد.', 'info');
+        });
+      });
+      refreshIcons();
+    }
+
+    function fillProfileForm() {
+      const p = state.profile;
+      document.getElementById('p-name').value = p.name || '';
+      document.getElementById('p-age').value = p.age || 28;
+      document.getElementById('p-gender').value = p.gender || 'مرد';
+      document.getElementById('p-height').value = p.height || 180;
+      document.getElementById('p-target').value = p.targetWeight || 82;
+      document.getElementById('p-level').value = p.level || 'متوسط';
+      document.getElementById('p-equipment').value = p.equipment || 'باشگاه کامل';
+      document.getElementById('p-days').value = String(p.weeklyDays || 4);
+    }
+
+    function renderProfileCalcs() {
+      const p = state.profile;
+      const h = Number(p.height) || 180;
+      const age = Number(p.age) || 28;
+      const w = state.logs.length ? Number(state.logs[0].weight) : (Number(p.targetWeight) || 82);
+      const hM = h / 100;
+      const minW = (18.5 * hM * hM).toFixed(1);
+      const maxW = (24.9 * hM * hM).toFixed(1);
+      const bmr = Math.round(10 * w + 6.25 * h - 5 * age + (p.gender === 'زن' ? -161 : 5));
+      const mult = { 2: 1.35, 3: 1.45, 4: 1.55, 5: 1.65, 6: 1.72 }[Number(p.weeklyDays) || 4] || 1.55;
+      const tdee = Math.round(bmr * mult);
+      const pro = `${Math.round(w * 1.7)} تا ${Math.round(w * 2.1)}`;
+
+      document.getElementById('calc-ideal-weight').textContent = `${fa(minW)} تا ${fa(maxW)} کیلو`;
+      document.getElementById('calc-bmr-tdee').textContent = `${fa(bmr)} / ${fa(tdee)} کالری`;
+      document.getElementById('calc-protein').textContent = `${fa(pro)} گرم`;
+    }
+
+    // ------------------------------------------------------------
+    // 5. GEMINI AI COACH (Exponential Backoff + Structured Plan + Chat)
+    // ------------------------------------------------------------
+    async function callGemini(payload, retries = 4) {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+      let wait = 1000;
+      for (let i = 0; i <= retries; i++) {
+        try {
+          const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) {
+            if ((res.status === 429 || res.status >= 500) && i < retries) {
+              await new Promise(r => setTimeout(r, wait));
+              wait *= 2;
+              continue;
+            }
+            throw new Error('api-error');
+          }
+          return await res.json();
+        } catch (err) {
+          if (i < retries) {
+            await new Promise(r => setTimeout(r, wait));
+            wait *= 2;
+            continue;
+          }
+          throw err;
+        }
+      }
+    }
+
+    function userContextJSON() {
+      return JSON.stringify({
+        profile: state.profile,
+        recentLogs: state.logs.slice(0, 14).map(l => ({
+          date: l.date, weight: l.weight, bodyFat: l.bodyFat, sleep: l.sleep,
+          energy: l.energy, soreness: l.soreness, calories: l.calories, protein: l.protein, notes: l.notes
+        }))
+      });
+    }
+
+    async function generateWorkout() {
+      const btn = document.getElementById('generate-ai-btn');
+      const skel = document.getElementById('ai-skeleton');
+      const out = document.getElementById('ai-result-container');
+      const muscle = document.getElementById('pref-muscle').value;
+      const note = document.getElementById('ai-extra-note').value.trim();
+
+      btn.disabled = true;
+      skel.classList.remove('hidden');
+      out.classList.add('hidden');
+
+      const sys = `تو مربی علمی و حرفه‌ای «فیت‌مینو» هستی و به فارسی روان و دقیق پاسخ می‌دهی.
+بر اساس پروفایل و تاریخچه واقعی وزن، خواب، انرژی و کوفتگی کاربر یک برنامه تمرینی ایمن و شخصی بساز.
+اگر کوفتگی زیاد یا خواب کم است، شدت (RPE) را هوشمندانه مدیریت کن. تجهیزات کاربر را دقیقاً رعایت کن.`;
+
+      const prompt = `پرونده کاربر: ${userContextJSON()}
+هدف امروز: ${state.prefGoal} | زمان: ${state.prefDuration} دقیقه | گروه عضلانی: ${muscle} | نکته کاربر: ${note || 'ندارد'}`;
+
+      const payload = {
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        systemInstruction: { parts: [{ text: sys }] },
+        generationConfig: {
+          responseMimeType: 'application/json',
+          responseSchema: {
+            type: 'OBJECT',
+            properties: {
+              planTitle: { type: 'STRING' },
+              focusArea: { type: 'STRING' },
+              durationMinutes: { type: 'INTEGER' },
+              readinessScore: { type: 'INTEGER' },
+              trendAnalysis: { type: 'STRING' },
+              warmup: { type: 'STRING' },
+              nutrition: {
+                type: 'OBJECT',
+                properties: {
+                  calories: { type: 'STRING' },
+                  protein: { type: 'STRING' },
+                  recovery: { type: 'STRING' },
+                  advice: { type: 'STRING' }
+                },
+                required: ['calories', 'protein', 'recovery', 'advice']
+              },
+              exercises: {
+                type: 'ARRAY',
+                items: {
+                  type: 'OBJECT',
+                  properties: {
+                    name: { type: 'STRING' },
+                    muscle: { type: 'STRING' },
+                    sets: { type: 'INTEGER' },
+                    reps: { type: 'STRING' },
+                    restSeconds: { type: 'INTEGER' },
+                    rpe: { type: 'STRING' },
+                    tip: { type: 'STRING' }
+                  },
+                  required: ['name', 'muscle', 'sets', 'reps', 'restSeconds', 'rpe', 'tip']
+                }
+              }
+            },
+            required: ['planTitle', 'focusArea', 'durationMinutes', 'readinessScore', 'trendAnalysis', 'warmup', 'nutrition', 'exercises']
+          }
+        }
+      };
+
+      try {
+        const res = await callGemini(payload);
+        const text = res?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) throw new Error('empty');
+        const plan = JSON.parse(text);
+        plan.exercises = (plan.exercises || []).map(ex => {
+          const s = Math.max(1, Math.min(8, Number(ex.sets) || 3));
+          return { ...ex, sets: s, restSeconds: Math.max(20, Math.min(240, Number(ex.restSeconds) || 90)), doneSets: Array(s).fill(false) };
+        });
+        state.currentPlan = plan;
+        renderCurrentPlan();
+        showToast('برنامه تمرینی هوشمند آماده شد!', 'success');
+      } catch {
+        showToast('خطا در ارتباط با مربی هوشمند. لطفاً دوباره امتحان کنید.', 'error');
+      } finally {
+        btn.disabled = false;
+        skel.classList.add('hidden');
+      }
+    }
+
+    function renderCurrentPlan() {
+      const p = state.currentPlan;
+      const out = document.getElementById('ai-result-container');
+      if (!p) { out.classList.add('hidden'); return; }
+      out.classList.remove('hidden');
+
+      document.getElementById('res-title').textContent = p.planTitle || 'برنامه امروز';
+      document.getElementById('res-focus').textContent = p.focusArea || state.prefGoal;
+      document.getElementById('res-duration').textContent = `${fa(p.durationMinutes || state.prefDuration)} دقیقه`;
+      document.getElementById('res-readiness').textContent = `آمادگی: ${fa(p.readinessScore || 80)}٪`;
+      document.getElementById('res-analysis').textContent = p.trendAnalysis || '';
+      document.getElementById('res-warmup').textContent = p.warmup || '';
+
+      const n = p.nutrition || {};
+      document.getElementById('res-cal').textContent = fa(n.calories || '۲۲۰۰');
+      document.getElementById('res-pro').textContent = fa(n.protein || '۱۶۰ گرم');
+      document.getElementById('res-rec').textContent = fa(n.recovery || '۸س / ۳ل');
+      document.getElementById('res-nutrition').textContent = n.advice || '';
+
+      const grid = document.getElementById('exercises-grid');
+      grid.innerHTML = (p.exercises || []).map((ex, ei) => {
+        const arr = ex.doneSets || Array(ex.sets).fill(false);
+        const allDone = arr.every(Boolean);
+        const setBtns = arr.map((done, si) => `
+          <button type="button" data-ei="${ei}" data-si="${si}" class="set-toggle min-h-[38px] flex-1 min-w-[54px] px-2 rounded-xl text-xs font-extrabold border transition flex items-center justify-center gap-1 ${
+            done
+              ? 'bg-emerald-500/20 border-emerald-400/60 text-emerald-300 shadow-[0_0_12px_-3px_rgba(0,245,160,0.6)]'
+              : 'bg-obsidian-950/75 border-white/10 text-slate-400 hover:text-white'
+          }">
+            <span>${done ? '✓' : '○'}</span><span>ست ${fa(si + 1)}</span>
+          </button>
+        `).join('');
+
+        return `
+          <div class="glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-5 border transition ${allDone ? 'border-emerald-400/50 bg-emerald-500/[0.04]' : 'border-white/[0.08]'}">
+            <div class="flex items-start justify-between gap-2 mb-3">
+              <div>
+                <span class="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-400/30 mb-1">${esc(ex.muscle)}</span>
+                <h5 class="text-sm sm:text-base font-extrabold text-white">${fa(ei + 1)}. ${esc(ex.name)}</h5>
+              </div>
+              <button type="button" data-sec="${ex.restSeconds}" data-name="${esc(ex.name)}" class="ex-rest-btn shrink-0 px-2.5 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-400/35 text-cyan-300 text-[11px] font-bold flex items-center gap-1 tabular-nums transition">
+                <i data-lucide="timer" class="w-3.5 h-3.5"></i>${fa(ex.restSeconds)}ث
+              </button>
+            </div>
+            <div class="grid grid-cols-3 gap-2 mb-3 text-center">
+              <div class="p-2 rounded-xl bg-obsidian-950/70"><span class="text-[10px] text-slate-400 block">ست</span><span class="text-sm font-black text-white tabular-nums">${fa(ex.sets)}</span></div>
+              <div class="p-2 rounded-xl bg-obsidian-950/70"><span class="text-[10px] text-slate-400 block">تکرار</span><span class="text-sm font-black text-emerald-300 tabular-nums">${esc(fa(ex.reps))}</span></div>
+              <div class="p-2 rounded-xl bg-obsidian-950/70"><span class="text-[10px] text-slate-400 block">شدت</span><span class="text-xs font-extrabold text-violet-300 tabular-nums">${esc(fa(ex.rpe))}</span></div>
+            </div>
+            <p class="text-xs text-slate-300 bg-white/[0.025] p-2.5 rounded-xl leading-relaxed mb-3"><span class="text-amber-400 font-bold">نکته: </span>${esc(ex.tip)}</p>
+            <div class="flex flex-wrap gap-1.5">${setBtns}</div>
+          </div>
+        `;
+      }).join('');
+
+      updateLiveSets();
+      grid.querySelectorAll('.set-toggle').forEach(b => {
+        b.addEventListener('click', () => {
+          const ex = state.currentPlan.exercises[Number(b.dataset.ei)];
+          if (!ex) return;
+          ex.doneSets[Number(b.dataset.si)] = !ex.doneSets[Number(b.dataset.si)];
+          renderCurrentPlan();
+        });
+      });
+      grid.querySelectorAll('.ex-rest-btn').forEach(b => {
+        b.addEventListener('click', () => openTimer(Number(b.dataset.sec), `استراحت پس از ${b.dataset.name}`, true));
+      });
+      refreshIcons();
+    }
+
+    function updateLiveSets() {
+      const exs = state.currentPlan?.exercises || [];
+      let total = 0, done = 0;
+      exs.forEach(e => { total += e.doneSets.length; done += e.doneSets.filter(Boolean).length; });
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      document.getElementById('live-sets-text').textContent = `${fa(done)} از ${fa(total)} ست (${fa(pct)}٪)`;
+      document.getElementById('live-sets-bar').style.width = `${pct}%`;
+    }
+
+    function renderSavedPlans() {
+      document.getElementById('saved-count-badge').textContent = fa(state.savedPlans.length);
+      const grid = document.getElementById('saved-plans-grid');
+      if (!state.savedPlans.length) {
+        grid.innerHTML = `<div class="md:col-span-2 glass-card rounded-3xl p-8 text-center border border-dashed border-white/10 text-xs text-slate-400">هنوز برنامه‌ای ذخیره نکرده‌اید.</div>`;
+        return;
+      }
+      grid.innerHTML = state.savedPlans.map(p => `
+        <div class="glass-card glass-hover rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between gap-3">
+          <div>
+            <div class="flex items-center justify-between text-[11px] mb-2">
+              <span class="px-2.5 py-0.5 rounded-full font-bold bg-violet-500/20 text-violet-300">${esc(p.focusArea)}</span>
+              <span class="text-slate-400">${faDate(p.savedDate)}</span>
+            </div>
+            <h4 class="text-sm sm:text-base font-extrabold text-white">${esc(p.planTitle)}</h4>
+            <p class="text-xs text-slate-400 mt-1.5 line-clamp-2">${esc(p.trendAnalysis || '')}</p>
+            <div class="flex gap-3 mt-2.5 text-[11px] text-slate-300 tabular-nums">
+              <span>${fa((p.exercises || []).length)} حرکت</span>
+              <span>${fa(p.durationMinutes || 45)} دقیقه</span>
+            </div>
+          </div>
+          <div class="flex gap-2 pt-2 border-t border-white/[0.06]">
+            <button type="button" data-load-plan="${esc(p.id)}" class="load-plan-btn flex-1 min-h-[40px] rounded-xl text-xs font-extrabold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/35 transition">اجرا و مشاهده</button>
+            <button type="button" data-del-plan="${esc(p.id)}" class="del-plan-btn min-h-[40px] px-3 rounded-xl text-xs font-bold bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-300 transition">حذف</button>
+          </div>
+        </div>
+      `).join('');
+
+      grid.querySelectorAll('.load-plan-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          const found = state.savedPlans.find(x => x.id === b.dataset.loadPlan);
+          if (!found) return;
+          state.currentPlan = JSON.parse(JSON.stringify(found));
+          switchCoachSub('planner');
+          renderCurrentPlan();
+          showToast('برنامه بارگذاری شد.', 'info');
+        });
+      });
+      grid.querySelectorAll('.del-plan-btn').forEach(b => {
+        b.addEventListener('click', async () => {
+          if (!(await askConfirm('حذف برنامه', 'این برنامه تمرینی حذف شود؟'))) return;
+          await removePlan(b.dataset.delPlan);
+          showToast('برنامه حذف شد.', 'info');
+        });
+      });
+    }
+
+    // ------------------------------------------------------------
+    // 6. AI COACH CHAT
+    // ------------------------------------------------------------
+    function resetChat() {
+      state.chatHistory = [];
+      document.getElementById('chat-messages').innerHTML = `
+        <div class="flex items-start gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-violet-500/25 border border-violet-400/40 text-violet-300 flex items-center justify-center text-[11px] font-black shrink-0">AI</div>
+          <div class="max-w-[85%] rounded-2xl rounded-tr-sm p-3 bg-obsidian-900/90 border border-white/[0.08] text-xs sm:text-sm text-slate-200 leading-7">
+            سلام ${esc(state.profile.name)}! من مربی هوش مصنوعی فیت‌مینو هستم و به روند وزن، خواب و هدف شما دسترسی دارم. هر سؤالی درباره تمرین یا تغذیه داری بپرس!
+          </div>
+        </div>`;
+    }
+
+    function addBubble(role, text) {
+      const box = document.getElementById('chat-messages');
+      const el = document.createElement('div');
+      if (role === 'user') {
+        el.className = 'flex justify-end';
+        el.innerHTML = `<div class="max-w-[85%] rounded-2xl rounded-tl-sm p-3 bg-gradient-to-l from-emerald-500/20 to-cyan-500/15 border border-emerald-400/35 text-xs sm:text-sm text-white leading-7 whitespace-pre-wrap">${esc(text)}</div>`;
+      } else {
+        el.className = 'flex items-start gap-2.5';
+        el.innerHTML = `<div class="w-8 h-8 rounded-xl bg-violet-500/25 border border-violet-400/40 text-violet-300 flex items-center justify-center text-[11px] font-black shrink-0">AI</div><div class="max-w-[85%] rounded-2xl rounded-tr-sm p-3 bg-obsidian-900/90 border border-white/[0.08] text-xs sm:text-sm text-slate-200 leading-7 whitespace-pre-wrap">${esc(text)}</div>`;
+      }
+      box.appendChild(el);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    async function sendChat(msg) {
+      const text = msg.trim();
+      if (!text) return;
+      const input = document.getElementById('chat-input');
+      const btn = document.getElementById('chat-send-btn');
+      input.value = '';
+      btn.disabled = true;
+      addBubble('user', text);
+      state.chatHistory.push({ role: 'user', parts: [{ text }] });
+
+      const box = document.getElementById('chat-messages');
+      const typing = document.createElement('div');
+      typing.className = 'text-xs text-violet-300 px-3 py-2';
+      typing.textContent = 'مربی در حال نوشتن پاسخ...';
+      box.appendChild(typing);
+      box.scrollTop = box.scrollHeight;
+
+      try {
+        const res = await callGemini({
+          contents: state.chatHistory.slice(-10),
+          systemInstruction: { parts: [{ text: `تو مربی هوش مصنوعی فیت‌مینو هستی. فارسی کوتاه، علمی و کاربردی بدون مارک‌داون پیچیده پاسخ بده. پرونده کاربر: ${userContextJSON()}` }] }
+        });
+        const reply = res?.candidates?.[0]?.content?.parts?.[0]?.text || 'پاسخی دریافت نشد.';
+        typing.remove();
+        state.chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+        addBubble('model', reply);
+      } catch {
+        typing.remove();
+        addBubble('model', 'خطا در اتصال به هوش مصنوعی. لطفاً کمی بعد دوباره تلاش کنید.');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // ------------------------------------------------------------
+    // 7. CIRCULAR SVG NEON REST TIMER
+    // ------------------------------------------------------------
+    const fmtClock = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+
+    function updateTimerUI() {
+      const t = state.timer;
+      const str = fmtClock(t.remaining);
+      document.getElementById('timer-display').textContent = str;
+      document.getElementById('timer-exercise-label').textContent = t.label;
+      document.getElementById('header-timer-badge').textContent = t.running ? str : 'تایمر';
+      const prog = t.total ? t.remaining / t.total : 0;
+      document.getElementById('timer-ring').style.strokeDashoffset = RING_LEN * (1 - prog);
+      document.getElementById('timer-toggle-btn').textContent = t.running ? 'توقف' : (t.remaining === 0 ? 'شروع مجدد' : 'شروع تایمر');
+      document.getElementById('timer-status').textContent = t.running ? 'در حال شمارش...' : (t.remaining === 0 ? 'زمان استراحت تمام شد!' : 'آماده');
+
+      document.querySelectorAll('.timer-preset-btn').forEach(b => {
+        const act = Number(b.dataset.preset) === t.total;
+        b.className = act
+          ? 'timer-preset-btn min-h-[40px] rounded-xl text-xs font-extrabold bg-emerald-500/15 text-emerald-300 border border-emerald-400/45 transition tabular-nums'
+          : 'timer-preset-btn min-h-[40px] rounded-xl text-xs font-bold bg-white/5 hover:bg-emerald-500/15 text-slate-300 border border-white/10 transition tabular-nums';
+      });
+    }
+
+    function stopTimer() {
+      if (state.timer.id) clearInterval(state.timer.id);
+      state.timer.id = null;
+      state.timer.running = false;
+    }
+
+    function setTimer(sec, label = null) {
+      stopTimer();
+      state.timer.total = sec;
+      state.timer.remaining = sec;
+      if (label) state.timer.label = label;
+      updateTimerUI();
+    }
+
+    function toggleTimer() {
+      if (state.timer.running) { stopTimer(); updateTimerUI(); return; }
+      if (state.timer.remaining <= 0) state.timer.remaining = state.timer.total;
+      state.timer.running = true;
+      updateTimerUI();
+      state.timer.id = setInterval(() => {
+        state.timer.remaining = Math.max(0, state.timer.remaining - 1);
+        updateTimerUI();
+        if (state.timer.remaining === 0) {
+          stopTimer();
+          updateTimerUI();
+          playChime();
+          showToast('زمان استراحت تمام شد! آماده ست بعدی هستید.', 'success');
+        }
+      }, 1000);
+    }
+
+    function openTimer(sec = null, label = null, auto = false) {
+      if (sec) setTimer(sec, label);
+      const m = document.getElementById('timer-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+      updateTimerUI();
+      if (auto && !state.timer.running) toggleTimer();
+    }
+
+    // ------------------------------------------------------------
+    // 8. EVENT BINDINGS & BOOT
+    // ------------------------------------------------------------
+    function bindEvents() {
+      document.querySelectorAll('[data-nav]').forEach(b => b.addEventListener('click', () => switchView(b.dataset.nav)));
+      document.getElementById('dash-add-log-btn').addEventListener('click', () => switchView('logs'));
+      document.getElementById('dash-see-history-btn').addEventListener('click', () => switchView('logs'));
+      document.getElementById('dash-open-coach-btn').addEventListener('click', () => { switchView('coach'); switchCoachSub('planner'); });
+
+      ['header-demo-btn', 'banner-demo-btn', 'logs-demo-btn'].forEach(id => {
+        document.getElementById(id).addEventListener('click', loadDemo14Days);
+      });
+
+      // Chart controls
+      document.querySelectorAll('.metric-toggle-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          state.chartMetric = b.dataset.metric;
+          document.querySelectorAll('.metric-toggle-btn').forEach(x => {
+            x.className = x.dataset.metric === state.chartMetric
+              ? 'metric-toggle-btn px-2.5 py-1 rounded-lg font-bold bg-cyan-500/20 text-cyan-300 transition'
+              : 'metric-toggle-btn px-2.5 py-1 rounded-lg font-bold text-slate-400 hover:text-white transition';
+          });
+          renderChart();
+        });
+      });
+
+      document.querySelectorAll('.range-toggle-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          state.chartRange = b.dataset.range;
+          document.querySelectorAll('.range-toggle-btn').forEach(x => {
+            x.className = x.dataset.range === state.chartRange
+              ? 'range-toggle-btn px-2 py-1 rounded-lg font-bold bg-emerald-500/20 text-emerald-300 transition'
+              : 'range-toggle-btn px-2 py-1 rounded-lg font-bold text-slate-400 hover:text-white transition';
+          });
+          renderChart();
+        });
+      });
+
+      // Log Form controls
+      const dateIn = document.getElementById('f-date');
+      dateIn.value = todayISO();
+      const syncDateLbl = () => document.getElementById('form-date-preview').textContent = faDate(dateIn.value);
+      syncDateLbl();
+      dateIn.addEventListener('change', syncDateLbl);
+
+      const enSlider = document.getElementById('f-energy');
+      const enTxt = { 1:'خیلی خسته',2:'خسته',3:'کم‌انرژی',4:'بی‌حال',5:'معمولی',6:'خوب',7:'پرانرژی',8:'سرحال',9:'عالی',10:'فول انرژی' };
+      const syncEn = () => document.getElementById('f-energy-label').textContent = `${fa(enSlider.value)} / ۱۰ — ${enTxt[enSlider.value]}`;
+      syncEn();
+      enSlider.addEventListener('input', syncEn);
+
+      document.querySelectorAll('.soreness-pill').forEach(b => {
+        b.addEventListener('click', () => {
+          const val = b.dataset.soreness;
+          document.getElementById('f-soreness').value = val;
+          document.querySelectorAll('.soreness-pill').forEach(x => {
+            const act = x.dataset.soreness === val;
+            if (!act) x.className = 'soreness-pill min-h-[44px] rounded-2xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-400 transition';
+            else if (val === 'کم') x.className = 'soreness-pill min-h-[44px] rounded-2xl text-xs font-extrabold border border-emerald-400/50 bg-emerald-500/15 text-emerald-300 transition';
+            else if (val === 'متوسط') x.className = 'soreness-pill min-h-[44px] rounded-2xl text-xs font-extrabold border border-amber-400/50 bg-amber-500/15 text-amber-300 transition';
+            else x.className = 'soreness-pill min-h-[44px] rounded-2xl text-xs font-extrabold border border-rose-400/50 bg-rose-500/15 text-rose-300 transition';
+          });
+        });
+      });
+
+      document.getElementById('log-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const w = parseFloat(document.getElementById('f-weight').value);
+        if (isNaN(w) || w < 30) { showToast('لطفاً وزن معتبر وارد کنید.', 'warning'); return; }
+        const btn = document.getElementById('save-log-btn');
+        btn.disabled = true;
+        try {
+          const bf = document.getElementById('f-bodyfat').value;
+          const cal = document.getElementById('f-calories').value;
+          const pro = document.getElementById('f-protein').value;
+          await addLog({
+            date: dateIn.value || todayISO(),
+            weight: w,
+            bodyFat: bf ? parseFloat(bf) : null,
+            sleep: parseFloat(document.getElementById('f-sleep').value) || 7.5,
+            energy: Number(enSlider.value) || 7,
+            soreness: document.getElementById('f-soreness').value || 'کم',
+            calories: cal ? parseInt(cal, 10) : null,
+            protein: pro ? parseInt(pro, 10) : null,
+            notes: document.getElementById('f-notes').value.trim()
+          });
+          document.getElementById('f-notes').value = '';
+          showToast('وضعیت امروز با موفقیت ثبت شد!', 'success');
+        } catch {
+          showToast('خطا در ذخیره رکورد', 'error');
+        } finally {
+          btn.disabled = false;
+        }
+      });
+
+      document.getElementById('history-search').addEventListener('input', renderHistory);
+      document.getElementById('history-soreness-filter').addEventListener('change', renderHistory);
+
+      // Coach controls
+      document.querySelectorAll('.coach-sub-btn').forEach(b => b.addEventListener('click', () => switchCoachSub(b.dataset.coachSub)));
+      document.querySelectorAll('.pref-goal-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          state.prefGoal = b.dataset.goal;
+          document.querySelectorAll('.pref-goal-btn').forEach(x => {
+            x.className = x.dataset.goal === state.prefGoal
+              ? 'pref-goal-btn min-h-[40px] rounded-xl text-xs font-extrabold border border-emerald-400/50 bg-emerald-500/15 text-emerald-300 transition'
+              : 'pref-goal-btn min-h-[40px] rounded-xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-300 transition';
+          });
+        });
+      });
+      document.querySelectorAll('.pref-dur-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          state.prefDuration = Number(b.dataset.dur);
+          document.querySelectorAll('.pref-dur-btn').forEach(x => {
+            x.className = Number(x.dataset.dur) === state.prefDuration
+              ? 'pref-dur-btn min-h-[40px] rounded-xl text-xs font-extrabold border border-cyan-400/50 bg-cyan-500/15 text-cyan-300 transition tabular-nums'
+              : 'pref-dur-btn min-h-[40px] rounded-xl text-xs font-bold border border-white/10 bg-white/[0.03] text-slate-300 transition tabular-nums';
+          });
+        });
+      });
+
+      document.getElementById('generate-ai-btn').addEventListener('click', generateWorkout);
+      document.getElementById('res-save-btn').addEventListener('click', async () => {
+        if (!state.currentPlan) return;
+        await savePlan(state.currentPlan);
+        showToast('برنامه در لیست ذخیره‌ها ثبت شد!', 'success');
+      });
+
+      // Chat controls
+      document.getElementById('chat-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        sendChat(document.getElementById('chat-input').value);
+      });
+      document.querySelectorAll('.quick-chat-btn').forEach(b => b.addEventListener('click', () => sendChat(b.textContent)));
+      document.getElementById('reset-chat-btn').addEventListener('click', resetChat);
+
+      // Profile form
+      document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('save-profile-btn');
+        btn.disabled = true;
+        try {
+          await saveProfile({
+            name: document.getElementById('p-name').value.trim() || 'ورزشکار',
+            age: Number(document.getElementById('p-age').value) || 28,
+            gender: document.getElementById('p-gender').value,
+            height: Number(document.getElementById('p-height').value) || 180,
+            targetWeight: parseFloat(document.getElementById('p-target').value) || 82,
+            level: document.getElementById('p-level').value,
+            equipment: document.getElementById('p-equipment').value,
+            weeklyDays: Number(document.getElementById('p-days').value) || 4
+          });
+          showToast('پروفایل و اهداف شما ذخیره شد!', 'success');
+        } catch {
+          showToast('خطا در ذخیره پروفایل', 'error');
+        } finally {
+          btn.disabled = false;
+        }
+      });
+
+      // Timer bindings
+      document.getElementById('header-timer-btn').addEventListener('click', () => openTimer());
+      document.getElementById('res-timer-btn').addEventListener('click', () => openTimer());
+      document.getElementById('close-timer-btn').addEventListener('click', () => {
+        const m = document.getElementById('timer-modal');
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+      });
+      document.getElementById('timer-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'timer-modal') {
+          e.target.classList.add('hidden');
+          e.target.classList.remove('flex');
+        }
+      });
+      document.getElementById('timer-toggle-btn').addEventListener('click', toggleTimer);
+      document.getElementById('timer-reset-btn').addEventListener('click', () => setTimer(state.timer.total));
+      document.querySelectorAll('.timer-preset-btn').forEach(b => b.addEventListener('click', () => setTimer(Number(b.dataset.preset), 'استراحت بین ست‌ها')));
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      bindEvents();
+      fillProfileForm();
+      resetChat();
+      switchView('dashboard');
+      updateTimerUI();
+      refreshIcons();
+      initCloud();
+    });
+  </script>
+</body>
+</html>
